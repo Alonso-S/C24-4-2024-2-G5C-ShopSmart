@@ -1,6 +1,7 @@
 package pe.edu.tecsup.shopsmart_user_backend.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.tecsup.shopsmart_user_backend.dto.LoginRequest;
@@ -25,5 +26,9 @@ public class AuthController {
         return ResponseEntity.ok(tokenResponse);
     }
 
+    @PostMapping("/refresh")
+    public TokenResponse refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader){
+        return authService.refreshToken(authHeader);
+    }
 
 }

@@ -1,5 +1,6 @@
 package pe.edu.tecsup.shopsmart_user_backend.services;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,7 +61,24 @@ public class AuthService {
         return new TokenResponse(jwtToken, refreshToken);
     }
 
+    public TokenResponse refreshToken(@NotNull final String authentication){
+        if (authentication == null || !authentication.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid auth header");
+        }
+        final String refreshToken = authentication.substring(7);
+        final String userEmail= jwtService.extractUsername(refreshToken);
+        User user = userRepository.findByEmail(userEmail).orElseThrow(
+                ()-> new UsernameNotFoundException("User not found")
+        );
+        final boolean isTokenValid = jwtService.isTokenValid(refreshToken, user);
+        if (!isTokenValid) {
+            return null;
+        }
 
+        final String accessToken = jwtService.generateRefreshToken(user);
+        saveUserToken(user, accessToken);
+        return  new TokenResponse(accessToken, refreshToken);
+    }
 
 
     private void saveUserToken(User user, String jwtToken){
