@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,7 +36,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/auth/**")
+                        req.requestMatchers("/auth/**", "/h2-console/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -48,6 +49,10 @@ public class SecurityConfig {
                                 .addLogoutHandler(this::logout)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
+                .headers(headers ->
+                        headers
+                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                ) // Permitir frames desde el mismo origen
         ;
 
         return http.build();

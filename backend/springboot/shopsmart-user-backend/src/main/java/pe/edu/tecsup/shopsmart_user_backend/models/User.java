@@ -1,13 +1,11 @@
 package pe.edu.tecsup.shopsmart_user_backend.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -21,22 +19,21 @@ public class User {
     private Long id;
 
     @NotEmpty
-    private String firstName;
+    private String name;
     @NotEmpty
-    private String lastName;
-    @NotNull
-    private LocalDate birthdate;
+    private String phone;
     @NotEmpty
-    private String username;
-    @NotEmpty
-    private String password;
-
+    private String address;
     @NotEmpty
     @Email
     private String email;
-    private String phone;
-    private String city;
-    private String state;
-    private String country;
-    private String address;
+    @NotEmpty
+    private String password;
+
+
+    @NotEmpty
+    private String province;
+
+    @NotEmpty
+    private String district;
 }

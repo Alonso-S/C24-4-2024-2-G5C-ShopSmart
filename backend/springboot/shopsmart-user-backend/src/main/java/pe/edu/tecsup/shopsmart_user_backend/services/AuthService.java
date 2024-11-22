@@ -12,6 +12,7 @@ import pe.edu.tecsup.shopsmart_user_backend.dto.RegisterRequest;
 import pe.edu.tecsup.shopsmart_user_backend.dto.TokenResponse;
 import pe.edu.tecsup.shopsmart_user_backend.models.Token;
 import pe.edu.tecsup.shopsmart_user_backend.models.User;
+import pe.edu.tecsup.shopsmart_user_backend.repositories.TokenRepository;
 import pe.edu.tecsup.shopsmart_user_backend.repositories.UserRepository;
 
 @Service
@@ -22,20 +23,18 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     public TokenResponse register(RegisterRequest request){
         User user = User.builder()
-                .firstName(request.firstName())
-                .lastName(request.lastName())
-                .birthdate(request.birthdate())
+                .name(request.name())
                 .phone(request.phone())
-                .city(request.city())
-                .state(request.state())
-                .country(request.country())
                 .address(request.address())
-                .username(request.username())
                 .email(request.email())
-                .password(passwordEncoder.encode(request.password())).build();
+                .password(passwordEncoder.encode(request.password()))
+                .province(request.province())
+                .district(request.district())
+                .build();
 
         User savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -62,7 +61,7 @@ public class AuthService {
     }
 
     public TokenResponse refreshToken(@NotNull final String authentication){
-        if (authentication == null || !authentication.startsWith("Bearer ")) {
+        if (!authentication.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Invalid auth header");
         }
         final String refreshToken = authentication.substring(7);
@@ -82,12 +81,13 @@ public class AuthService {
 
 
     private void saveUserToken(User user, String jwtToken){
-        Token.builder()
+        final Token token = Token.builder()
                 .user(user)
                 .token(jwtToken)
                 .tokenType(Token.TokenType.BEARER)
                 .isExpired(false)
                 .isRevoked(false)
                 .build();
+        tokenRepository.save(token);
     }
 }
