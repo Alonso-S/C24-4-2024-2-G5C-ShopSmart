@@ -60,24 +60,28 @@ public class AuthService {
         return new TokenResponse(jwtToken, refreshToken);
     }
 
-    public TokenResponse refreshToken(@NotNull final String authentication){
+    public String refreshToken(@NotNull final String authentication){
         if (!authentication.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Invalid auth header");
         }
         final String refreshToken = authentication.substring(7);
+        final boolean isTokenExpired = jwtService.isTokenExpired(refreshToken);
+        if (isTokenExpired) {
+            return null;
+        }
         final String userEmail= jwtService.extractUsername(refreshToken);
         User user = userRepository.findByEmail(userEmail).orElseThrow(
                 ()-> new UsernameNotFoundException("User not found")
         );
-        final boolean isTokenValid = jwtService.isTokenValid(refreshToken, user);
-        if (!isTokenValid) {
-            return null;
-        }
 
-        final String accessToken = jwtService.generateRefreshToken(user);
-        saveUserToken(user, accessToken);
-        return  new TokenResponse(accessToken, refreshToken);
+
+        final String newAccessToken = jwtService.generateRefreshToken(user);
+
+        saveUserToken(user, newAccessToken);
+        return newAccessToken;
     }
+
+
 
 
     private void saveUserToken(User user, String jwtToken){

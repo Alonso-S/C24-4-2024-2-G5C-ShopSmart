@@ -1,12 +1,10 @@
 package pe.edu.tecsup.shopsmart_user_backend.config;
-
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,9 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pe.edu.tecsup.shopsmart_user_backend.models.Token;
 import pe.edu.tecsup.shopsmart_user_backend.repositories.TokenRepository;
+import pe.edu.tecsup.shopsmart_user_backend.services.CookieService;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -30,7 +28,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final TokenRepository tokenRepository;
     private final AuthenticationProvider authenticationProvider;
-
+    private final CookieService cookieService;
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http
@@ -43,10 +41,10 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) // Filtro JWT
                 .logout(logout ->
                         logout.logoutUrl("/auth/logout")
-                                .addLogoutHandler(this::logout)
+                                .addLogoutHandler(this::logout) // Manejo de logout
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
                 .headers(headers ->
@@ -62,13 +60,12 @@ public class SecurityConfig {
             final HttpServletRequest request, final HttpServletResponse response,
             final Authentication authentication
     ) {
-
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        // Obtener el token desde las cookies en lugar de los encabezados
+        final String jwt = cookieService.getCookieValue(request, "jwt_token");
+        if (jwt == null) {
             return;
         }
 
-        final String jwt = authHeader.substring(7);
         final Token storedToken = tokenRepository.findByToken(jwt)
                 .orElse(null);
         if (storedToken != null) {
@@ -78,4 +75,6 @@ public class SecurityConfig {
             SecurityContextHolder.clearContext();
         }
     }
+
+
 }
