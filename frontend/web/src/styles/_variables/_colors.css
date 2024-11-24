@@ -1,0 +1,8 @@
+:root {
+    --color-skyblue: #00BCD4;
+    --color-black: #000000;
+    --color-background: #fff;
+    --color-text: #ffffff;
+    --color-accent: #ff5733; 
+    --color-link-hover: rgba(255, 255, 255, 0.8);
+  }

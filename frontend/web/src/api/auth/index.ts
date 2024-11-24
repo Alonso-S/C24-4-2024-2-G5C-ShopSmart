@@ -48,7 +48,7 @@ const registerUser = async (user: User) => {
 
 const logoutUser = async () => {
     try {
-        const response = await axiosInstance.post("/auth/logout");
+        const response = await axiosInstance.post("auth/logout");
         console.log(response);
         return response;
     } catch (err) {
@@ -64,7 +64,7 @@ const logoutUser = async () => {
 
 const verifyToken = async () => {
     try {
-        await axios.get("/auth/validate-token");
+        await axiosInstance.get("/auth/validate-token");
     } catch (err) {
         if (axios.isAxiosError(err)) {
             const message = err.response?.data?.message ||
@@ -82,7 +82,7 @@ const verifyToken = async () => {
 
 const refreshToken = async () => {
     try {
-        await axios.post("/auth/refresh-token");
+        await axiosInstance.post("/auth/refresh-token");
     } catch (err) {
         if (axios.isAxiosError(err)) {
             const message = err.response?.data?.message ||
@@ -98,4 +98,28 @@ const refreshToken = async () => {
     }
 };
 
-export { loginUser, logoutUser, refreshToken, registerUser, verifyToken };
+const verifyAndRefreshToken = async () => {
+    try {
+        await verifyToken();
+    } catch (error) {
+        if (!axios.isAxiosError(error)) {
+            throw new Error(
+                `Unexpected error verifying and refreshing token:  ${error}`,
+            );
+        }
+
+        const statusCode = error.response?.status;
+        if (statusCode === 401) {
+            try {
+                await refreshToken(); // Intentamos refrescar el token
+            } catch (refreshError) {
+                console.error("Error refreshing token: ", refreshError);
+
+                throw new Error(
+                    `Unexpected refresh token error (status ${statusCode})`,
+                );
+            }
+        }
+    }
+};
+export { loginUser, logoutUser, registerUser, verifyAndRefreshToken };

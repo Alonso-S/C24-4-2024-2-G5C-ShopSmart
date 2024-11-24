@@ -4,19 +4,17 @@ import AuthContext from "./AuthContext";
 import {
     loginUser,
     logoutUser,
-    refreshToken,
     registerUser,
-    verifyToken,
+    verifyAndRefreshToken,
 } from "../../api/auth/index";
 import User from "../../types/UserDTO";
 import {
     AUTH_LOGIN,
     AUTH_LOGOUT,
-    AUTH_REFRESH_TOKEN,
     AUTH_REGISTER,
     AUTH_VERIFY_TOKEN,
 } from "./Actions";
-import axios from "axios";
+
 interface AuthStateProps {
     children: ReactNode;
 }
@@ -36,6 +34,7 @@ const AuthState = ({ children }: AuthStateProps) => {
     const authLogin = useCallback(async (email: string, password: string) => {
         try {
             await loginUser({ email, password });
+            localStorage.setItem("isAuthenticated", "true");
             setAuthenticated(AUTH_LOGIN, true);
         } catch (err) {
             console.error("Login error: ", err);
@@ -45,9 +44,11 @@ const AuthState = ({ children }: AuthStateProps) => {
         }
     }, []);
 
+    // Función para manejar el logout
     const authLogout = useCallback(async () => {
         try {
             await logoutUser();
+            localStorage.setItem("isAuthenticated", "false");
             setAuthenticated(AUTH_LOGOUT, false);
             console.log("Session successfully closed");
         } catch (err) {
@@ -58,10 +59,12 @@ const AuthState = ({ children }: AuthStateProps) => {
         }
     }, []);
 
+    // Función para registrar usuario
     const authRegister = useCallback(async (user: User) => {
         try {
             await registerUser(user);
             setAuthenticated(AUTH_REGISTER, true);
+            localStorage.setItem("isAuthenticated", "true");
             console.log("Usuario registrado correctamente");
         } catch (err) {
             console.error(err);
@@ -69,40 +72,7 @@ const AuthState = ({ children }: AuthStateProps) => {
         }
     }, []);
 
-    const authVerifyToken = useCallback(async () => {
-        try {
-            // Verificar si el token es válido
-            await verifyToken(); // Llamada para verificar si el token es válido
-            setAuthenticated(AUTH_VERIFY_TOKEN, true); // Si es válido, usuario autenticado
-        } catch (err) {
-            if (axios.isAxiosError(err)) {
-                const statusCode = err.response?.status;
-                // Si el token es inválido (código 401), intentamos refrescarlo
-                if (statusCode === 401) {
-                    try {
-                        await refreshToken(); // Intentamos refrescar el token
-                        setAuthenticated(AUTH_REFRESH_TOKEN, true); // Si se refresca correctamente, autenticamos
-                    } catch (refreshError) {
-                        // Si el refresco falla, cerramos la sesión
-                        console.error("Error refreshing token: ", refreshError);
-                        setAuthenticated(AUTH_REFRESH_TOKEN, false);
-                        console.log(
-                            "Refresh token expired, please log in again.",
-                        );
-                    }
-                } else {
-                    // Si el error no es de tipo 401, se considera un error no esperado
-                    console.error("Error verifying token: ", err);
-                    setAuthenticated(AUTH_VERIFY_TOKEN, false);
-                }
-            } else {
-                // Si no es un error de Axios, se captura el error genérico
-                console.error("Unexpected error verifying token: ", err);
-                setAuthenticated(AUTH_VERIFY_TOKEN, false);
-            }
-        }
-    }, []);
-
+    // Proporcionamos los valores a los componentes hijos
     const value = useMemo(
         () => ({
             authLogin,
@@ -112,12 +82,52 @@ const AuthState = ({ children }: AuthStateProps) => {
         [authLogin, authLogout, authRegister],
     );
 
+    // Verificar el token en el inicio de la aplicación
     useEffect(() => {
-        const verifyAndRefreshToken = async () => {
-            await authVerifyToken();
+        const loginWithToken = async () => {
+            try {
+                await verifyAndRefreshToken();
+                localStorage.setItem("isAuthenticated", "true");
+                setAuthenticated(AUTH_VERIFY_TOKEN, true);
+            } catch (err) {
+                console.error("Error verifying token: ", err);
+                localStorage.setItem("isAuthenticated", "false");
+                setAuthenticated(AUTH_VERIFY_TOKEN, false);
+            }
         };
-        verifyAndRefreshToken();
-    }, [authVerifyToken]);
+
+        loginWithToken();
+    }, []);
+
+    // Sincronización entre pestañas usando `localStorage` y el evento `storage`
+    useEffect(() => {
+        const handleStorageChange = async () => {
+            const isAuthValue =
+                localStorage.getItem("isAuthenticated") === "true";
+            if (!isAuthValue) {
+                setAuthenticated(AUTH_VERIFY_TOKEN, false);
+
+                localStorage.setItem("isAuthenticated", "false");
+                window.location.href = "/";
+                return;
+            }
+            try {
+                await verifyAndRefreshToken();
+                setAuthenticated(AUTH_VERIFY_TOKEN, true);
+            } catch (err) {
+                console.error("Error verifying token: ", err);
+                localStorage.setItem("isAuthenticated", "false");
+                setAuthenticated(AUTH_VERIFY_TOKEN, false);
+            }
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
 
     return (
         <AuthContext.Provider
