@@ -3,18 +3,14 @@ package pe.edu.tecsup.shopsmart_user_backend.services;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pe.edu.tecsup.shopsmart_user_backend.models.User;
-import pe.edu.tecsup.shopsmart_user_backend.repositories.UserRepository;
-
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
@@ -23,8 +19,6 @@ public class JwtService {
     private Long jwtExpiration;
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
-
-    private final UserRepository userRepository;
 
     public String generateToken(final User user) {
         return buildToken(user, jwtExpiration);
@@ -53,11 +47,9 @@ public class JwtService {
     }
 
 
-    public boolean isTokenValid(String token) {
-        final String userEmail = extractUsername(token);
-
-        return userRepository.findByEmail(userEmail).map(user-> !isTokenExpired(token)).orElse(false);
-
+    public boolean isTokenValid(String token, User user) {
+        final String username = extractUsername(token);
+        return (username.equals(user.getEmail())) && !isTokenExpired(token);
     }
 
     public boolean isTokenExpired(String token) {
