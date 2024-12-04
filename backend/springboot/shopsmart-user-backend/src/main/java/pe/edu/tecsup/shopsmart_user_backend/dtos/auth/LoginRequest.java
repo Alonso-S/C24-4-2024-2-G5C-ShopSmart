@@ -1,4 +1,4 @@
-package pe.edu.tecsup.shopsmart_user_backend.dto;
+package pe.edu.tecsup.shopsmart_user_backend.dtos.auth;
 
 public record LoginRequest(
         String email,

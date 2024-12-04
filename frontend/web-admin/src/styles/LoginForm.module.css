@@ -1,0 +1,126 @@
+/* LoginForm.module.css */
+
+/* Variables locales del componente (variables fijas) */
+:root {
+    --loginFormPadding: 40px;
+    --inputPadding: 12px;
+    --buttonPadding: 12px;
+    --inputMarginBottom: 12px;
+    --buttonFontSize: 16px;
+    --buttonHoverBg: #0097A7;
+    --iconSize: 30px;
+    --socialIconSpacing: 10px;
+    --linkHoverColor: #00BCD4;
+    --boxShadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Títulos */
+  .title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: var(--inputMarginBottom);
+    color: var(--colorSecondary, #464646);
+  }
+  
+  /* Descripción */
+  .paragraph {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: var(--inputMarginBottom);
+    color: var(--colorSecondary, #464646);
+  }
+  
+  /* Entradas de texto */
+  .loginForm input[type="email"],
+  .loginForm input[type="password"] {
+    width: 100%;
+    padding: var(--inputPadding);
+    margin-bottom: var(--inputMarginBottom);
+    border: 1px solid var(--colorBorder, #ccc);
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Botón de inicio */
+  .loginForm button {
+    width: 100%;
+    padding: var(--buttonPadding);
+    background-color: var(--colorPrimary, #00BCD4);
+    color: var(--colorWhite, #fff);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--buttonFontSize);
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Efecto hover del botón */
+  .loginForm button:hover {
+    background-color: var(--buttonHoverBg);
+  }
+  
+  /* Opciones de login (checkbox y link) */
+  .loginForm .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--inputMarginBottom);
+    color: var(--colorSecondary, #464646);
+  }
+  
+  .loginForm .options label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: var(--inputPadding);
+  }
+  
+  .loginForm .options input[type="checkbox"] {
+    transform: scale(0.9);
+  }
+  
+  .loginForm .options a {
+    font-size: 14px;
+    color: var(--linkHoverColor, #00BCD4);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+  }
+  
+  .loginForm .options a:active {
+    transform: scale(0.95);
+    color: var(--linkHoverColor, #00BCD4);
+  }
+  
+  /* Sección de login social */
+  .socialLogin {
+    text-align: center;
+  }
+  
+  .socialLogin .icons a {
+    margin: 0 var(--socialIconSpacing);
+    color: var(--color-skyblue);
+
+  }
+  
+  .socialLogin .icons img {
+    width: var(--iconSize);
+  }
+  
+  .socialLogin p {
+    margin-top: var(--inputMarginBottom);
+    font-size: 14px;
+  }
+  
+  .socialLogin span {
+    color: var(--linkHoverColor, #00BCD4);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .container{
+    width: 400px;
+    background-color: var(--color-background, #fff);
+    padding: var(--loginFormPadding);
+    border-radius: 10px;
+    box-shadow: var(--boxShadow);
+  }

@@ -7,9 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pe.edu.tecsup.shopsmart_user_backend.dto.LoginRequest;
-import pe.edu.tecsup.shopsmart_user_backend.dto.RegisterRequest;
-import pe.edu.tecsup.shopsmart_user_backend.dto.TokenResponse;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.LoginRequest;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.RegisterRequest;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.TokenResponse;
 import pe.edu.tecsup.shopsmart_user_backend.models.Token;
 import pe.edu.tecsup.shopsmart_user_backend.models.User;
 import pe.edu.tecsup.shopsmart_user_backend.repositories.TokenRepository;

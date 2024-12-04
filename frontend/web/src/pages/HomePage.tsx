@@ -5,8 +5,8 @@ export const HomePage = () => {
         <div>
             <h1>Bienvenido a ShopSmart</h1>
             <p>Una plataforma de optimización de compras</p>
-            <Link to="/login">Ir a Login</Link>{" "}
-            {/* Link para ir a la página de login */}
+            <Link to="/login">Ir a Login</Link>
+            {" "}
         </div>
     );
 };

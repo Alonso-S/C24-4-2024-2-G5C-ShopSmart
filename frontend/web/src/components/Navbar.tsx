@@ -16,11 +16,11 @@ const Navbar = () => {
                 </li>
                 <li className={styles.navItem}>
                     <Link
-                        to="/recipes"
+                        to="/stores"
                         className={styles.navLink}
-                        aria-label="Ir a la página de recetas"
+                        aria-label="Ir a la página de tiendas"
                     >
-                        Recetas
+                        Tiendas
                     </Link>
                 </li>
                 <li className={styles.navItem}>

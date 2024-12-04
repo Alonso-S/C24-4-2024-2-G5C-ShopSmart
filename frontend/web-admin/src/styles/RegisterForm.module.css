@@ -1,0 +1,139 @@
+
+  /* Títulos */
+  .title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--colorSecondary, #464646);
+  }
+  
+  /* Descripción */
+  .paragraph {
+    margin-top: 0.5rem;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: var(--inputMarginBottom);
+    color: var(--colorSecondary, #464646);
+  }
+  
+  /* Entradas de texto */
+  .registerForm input[type="text"],
+  .registerForm input[type="tel"],
+  .registerForm input[type="email"],
+  .registerForm input[type="password"] {
+    width: 100%;
+    padding: var(--inputPadding);
+    margin-bottom: var(--inputMarginBottom);
+    border: 1px solid var(--colorBorder, #ccc);
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Botón de inicio */
+  .registerForm button {
+    width: 100%;
+    padding: var(--buttonPadding);
+    background-color: var(--colorPrimary, #00BCD4);
+    color: var(--colorWhite, #fff);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--buttonFontSize);
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Efecto hover del botón */
+  .registerForm button:hover {
+    background-color: var(--buttonHoverBg);
+  }
+  
+  /* Opciones de login (checkbox y link) */
+  .registerForm .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--inputMarginBottom);
+    color: var(--colorSecondary, #464646);
+  }
+  
+  .registerForm .options label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: var(--inputPadding);
+  }
+  
+  .registerForm .options input[type="checkbox"] {
+    transform: scale(0.9);
+  }
+  
+  .regiForm .options a {
+    font-size: 14px;
+    color: var(--linkHoverColor, #00BCD4);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+  }
+  
+  .loginForm .options a:active {
+    transform: scale(0.95);
+    color: var(--linkHoverColor, #00BCD4);
+  }
+  
+  /* Sección de login social */
+  .socialLogin {
+    text-align: center;
+  }
+  
+  .socialLogin .icons a {
+    margin: 0 var(--socialIconSpacing);
+  }
+  
+  .socialLogin .icons img {
+    width: var(--iconSize);
+  }
+  
+  .socialLogin p {
+    margin-top: var(--inputMarginBottom);
+    font-size: 14px;
+  }
+  
+  .socialLogin a {
+    color: var(--linkHoverColor, #00BCD4);
+    text-decoration: none;
+  }
+  
+  
+.registerForm .terms {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--colorSecondary, #464646)
+}
+
+.registerForm .terms input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.registerForm .terms label {
+  font-size: 14px;
+}
+
+.registerForm .terms span {
+  color: #00b7ff;
+  text-decoration: none;
+}
+
+
+.paragraph span{
+  color: var(--linkHoverColor, #00BCD4);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.container{
+  width: 400px;
+  background-color: var(--color-background, #fff);
+  padding: var(--loginFormPadding);
+  border-radius: 10px;
+  box-shadow: var(--boxShadow);
+}

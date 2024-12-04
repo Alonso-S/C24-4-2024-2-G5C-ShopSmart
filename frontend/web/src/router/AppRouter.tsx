@@ -2,6 +2,7 @@ import { AuthPage, DashboardPage, HomePage } from "../pages";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Header from "../layouts/Header";
+import { StorePage } from "../pages/StorePage";
 
 function AppRouter() {
     return (
@@ -17,7 +18,7 @@ function AppRouter() {
                 {/* Rutas Protegidas  */}
 
                 <Route element={<PrivateRoute />}>
-                    <Route path="recipes" element={<DashboardPage />} />
+                    <Route path="stores" element={<StorePage />} />
                     <Route path="routes" element={<DashboardPage />} />
                     <Route path="offers" element={<DashboardPage />} />
                     <Route path="inventory" element={<DashboardPage />} />

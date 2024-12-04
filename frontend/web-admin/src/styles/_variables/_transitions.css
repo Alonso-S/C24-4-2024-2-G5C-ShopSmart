@@ -1,0 +1,6 @@
+:root {
+    --transition-duration-short: 0.2s;
+    --transition-duration-medium: 0.3s;
+    --transition-duration-long: 0.5s;
+    --transition-timing-function: ease-in-out;
+  }

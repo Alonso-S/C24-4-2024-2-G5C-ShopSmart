@@ -1,0 +1,6 @@
+.main{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0px ;
+}

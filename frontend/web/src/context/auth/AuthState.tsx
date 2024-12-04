@@ -3,7 +3,7 @@ import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 import {
     loginUser,
-    logoutUser,
+    // logoutUser,
     registerUser,
     verifyAndRefreshToken,
 } from "../../api/auth/index";
@@ -47,7 +47,6 @@ const AuthState = ({ children }: AuthStateProps) => {
     // Función para manejar el logout
     const authLogout = useCallback(async () => {
         try {
-            await logoutUser();
             localStorage.setItem("isAuthenticated", "false");
             setAuthenticated(AUTH_LOGOUT, false);
             console.log("Session successfully closed");
@@ -59,7 +58,6 @@ const AuthState = ({ children }: AuthStateProps) => {
         }
     }, []);
 
-    // Función para registrar usuario
     const authRegister = useCallback(async (user: User) => {
         try {
             await registerUser(user);
@@ -72,7 +70,6 @@ const AuthState = ({ children }: AuthStateProps) => {
         }
     }, []);
 
-    // Proporcionamos los valores a los componentes hijos
     const value = useMemo(
         () => ({
             authLogin,
@@ -82,24 +79,21 @@ const AuthState = ({ children }: AuthStateProps) => {
         [authLogin, authLogout, authRegister],
     );
 
-    // Verificar el token en el inicio de la aplicación
-    useEffect(() => {
-        const loginWithToken = async () => {
-            try {
-                await verifyAndRefreshToken();
-                localStorage.setItem("isAuthenticated", "true");
-                setAuthenticated(AUTH_VERIFY_TOKEN, true);
-            } catch (err) {
-                console.error("Error verifying token: ", err);
-                localStorage.setItem("isAuthenticated", "false");
-                setAuthenticated(AUTH_VERIFY_TOKEN, false);
-            }
-        };
-
-        loginWithToken();
+    const firstLogin = useCallback(async () => {
+        try {
+            await verifyAndRefreshToken();
+            localStorage.setItem("isAuthenticated", "true");
+            setAuthenticated(AUTH_VERIFY_TOKEN, true);
+        } catch (err) {
+            console.error("Error verifying token: ", err);
+            localStorage.setItem("isAuthenticated", "false");
+            setAuthenticated(AUTH_VERIFY_TOKEN, false);
+        }
     }, []);
+    useEffect(() => {
+        firstLogin();
+    }, [firstLogin]);
 
-    // Sincronización entre pestañas usando `localStorage` y el evento `storage`
     useEffect(() => {
         const handleStorageChange = async () => {
             const isAuthValue =
@@ -112,22 +106,18 @@ const AuthState = ({ children }: AuthStateProps) => {
                 return;
             }
             try {
-                await verifyAndRefreshToken();
-                setAuthenticated(AUTH_VERIFY_TOKEN, true);
+                firstLogin();
             } catch (err) {
                 console.error("Error verifying token: ", err);
-                localStorage.setItem("isAuthenticated", "false");
-                setAuthenticated(AUTH_VERIFY_TOKEN, false);
             }
         };
 
         window.addEventListener("storage", handleStorageChange);
 
-        // Cleanup
         return () => {
             window.removeEventListener("storage", handleStorageChange);
         };
-    }, []);
+    }, [firstLogin]);
 
     return (
         <AuthContext.Provider
