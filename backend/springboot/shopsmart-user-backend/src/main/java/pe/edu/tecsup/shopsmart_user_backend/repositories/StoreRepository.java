@@ -22,6 +22,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Store> findByLocationNear(@Param("location") Point location, @Param("distance") double distance);
 
 
-
+    @Query(value = "SELECT s FROM stores s WHERE ST_DWithin(ST_SetSRID(s.location, 4326), ST_SetSRID(:userLocation, 4326), :radius)", nativeQuery = true)
+    List<Store> findStoresWithinRadius(@Param("userLocation") Point userLocation, @Param("radius") double radius);
 }
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.LoginRequest;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.RegisterRequest;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.auth.TokenResponse;
-import pe.edu.tecsup.shopsmart_user_backend.models.Token;
+import pe.edu.tecsup.shopsmart_user_backend.models.RefreshToken;
 import pe.edu.tecsup.shopsmart_user_backend.models.User;
 import pe.edu.tecsup.shopsmart_user_backend.repositories.TokenRepository;
 import pe.edu.tecsup.shopsmart_user_backend.repositories.UserRepository;
@@ -22,8 +22,8 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final AuthenticationManager authenticationManager;
 
     public TokenResponse register(RegisterRequest request){
         User user = User.builder()
@@ -34,37 +34,35 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.password()))
                 .province(request.province())
                 .district(request.district())
+                .role("USER")
                 .build();
 
         User savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
+        saveUserToken(savedUser, refreshToken);
         return new TokenResponse(jwtToken, refreshToken);
     }
 
     public TokenResponse login(LoginRequest request){
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
+
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         request.email(),
                         request.password()
-                )
         );
+        authenticationManager.authenticate(authToken);
 
         User user = userRepository.findByEmail(request.email()).orElseThrow(
                 ()-> new UsernameNotFoundException("User not found"));
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
-
+        saveUserToken(user, refreshToken);
         return new TokenResponse(jwtToken, refreshToken);
     }
 
-    public String refreshToken(@NotNull final String authentication){
-        if (!authentication.startsWith("Bearer ")) {
-            throw new IllegalArgumentException("Invalid auth header");
-        }
-        final String refreshToken = authentication.substring(7);
+    public String refreshToken(@NotNull final String refreshToken){
+
         final boolean isTokenExpired = jwtService.isTokenExpired(refreshToken);
         if (isTokenExpired) {
             return null;
@@ -85,13 +83,12 @@ public class AuthService {
 
 
     private void saveUserToken(User user, String jwtToken){
-        final Token token = Token.builder()
+        final RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
                 .token(jwtToken)
-                .tokenType(Token.TokenType.BEARER)
                 .isExpired(false)
                 .isRevoked(false)
                 .build();
-        tokenRepository.save(token);
+        tokenRepository.save(refreshToken);
     }
 }

@@ -1,12 +1,7 @@
-@import './_reset.css';
-@import './_global.css';
+@import "./_reset.css";
+@import "./_global.css";
 
-@import './_variables/_colors.css';
-@import './_variables/_spacing.css';
-@import './_variables/_transitions.css';
-@import './_variables/_typography.css';
-
-
-
-
-
+@import "./_variables/_colors.css";
+@import "./_variables/_spacing.css";
+@import "./_variables/_transitions.css";
+@import "./_variables/_typography.css";

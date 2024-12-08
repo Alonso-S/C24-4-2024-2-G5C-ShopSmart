@@ -1,0 +1,54 @@
+.howItWorks {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: white;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #1cacc1;
+  }
+  
+  .steps {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+  }
+  
+  .icon {
+    color: #1cacc1;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .stepTitle {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .howItWorks {
+      padding: 3rem 1rem;
+    }
+  
+    .steps {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .step {
+      margin-bottom: 2rem;
+    }
+  }
+  
+  

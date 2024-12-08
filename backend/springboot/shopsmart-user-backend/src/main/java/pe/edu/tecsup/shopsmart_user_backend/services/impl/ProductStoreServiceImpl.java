@@ -138,4 +138,8 @@ public class ProductStoreServiceImpl implements ProductStoreService {
         }
     }
 
+    public List<ProductInStoreDTO> getProductPrices(Product product) {
+        return List.of();
+    }
+
 }

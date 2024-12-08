@@ -1,0 +1,102 @@
+.infoContainer {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .heading {
+    color: #00BCD4;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .infoField {
+    margin-bottom: 1rem;
+  }
+  
+  .infoField label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  
+  .infoField p {
+    color: #666;
+    margin: 0;
+  }
+  
+  .editButton {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .editButton:hover {
+    background-color: #008ba3;
+  }
+  
+  @media (max-width: 767px) {
+    .infoContainer {
+      width: 100%;
+    }
+    
+  }
+  
+  
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.saveButton,
+.cancelButton {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.saveButton {
+  background-color: #1cacc1;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #158f9b;
+}
+
+.cancelButton {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.cancelButton:hover {
+  background-color: #e0e0e0;
+}

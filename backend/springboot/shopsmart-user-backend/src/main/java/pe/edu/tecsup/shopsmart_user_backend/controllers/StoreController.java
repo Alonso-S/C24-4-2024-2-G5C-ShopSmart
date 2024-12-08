@@ -60,8 +60,6 @@ public class StoreController {
     }
 
 
-
-
     @GetMapping("/{storeId}/products")
     public ResponseEntity<List<ProductInStoreDTO>> getAllProductsInStore(@PathVariable Long storeId) {
         return ResponseEntity.ok(productStoreService.getAllProductsInStore(storeId));

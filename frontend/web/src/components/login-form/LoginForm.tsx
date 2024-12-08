@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
-import AuthContext from "../context/auth/AuthContext";
-import { Link } from "react-router-dom";
-import styles from "../styles/LoginForm.module.css";
+import AuthContext from "../../context/auth/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./login-form.module.css";
 
-interface LoginFormProps {
-    toggleForm: () => void;
-}
-
-const LoginForm = ({ toggleForm }: LoginFormProps) => {
+const LoginForm = () => {
     const { authLogin } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,11 +26,11 @@ const LoginForm = ({ toggleForm }: LoginFormProps) => {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true); // Comienza la carga
+        setIsLoading(true);
 
         if (password.length < 8) {
             setError("La contraseña debe tener al menos 8 caracteres.");
-            setIsLoading(false); // Detener carga si hay error
+            setIsLoading(false);
             return;
         }
 
@@ -95,7 +92,11 @@ const LoginForm = ({ toggleForm }: LoginFormProps) => {
                 </div>
                 <p className={styles.paragraph}>
                     ¿No tienes una cuenta?{" "}
-                    <span onClick={toggleForm}>
+                    <span
+                        onClick={() => {
+                            navigate("/register");
+                        }}
+                    >
                         Crear una cuenta
                     </span>
                 </p>

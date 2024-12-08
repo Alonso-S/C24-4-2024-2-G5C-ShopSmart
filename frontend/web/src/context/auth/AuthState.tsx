@@ -3,7 +3,7 @@ import authReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 import {
     loginUser,
-    // logoutUser,
+    logoutUser,
     registerUser,
     verifyAndRefreshToken,
 } from "../../api/auth/index";
@@ -20,7 +20,7 @@ interface AuthStateProps {
 }
 const AuthState = ({ children }: AuthStateProps) => {
     const initState = {
-        isAuthenticated: false,
+        isAuthenticated: localStorage.getItem("isAuthenticated") === "true",
     };
     const [state, dispatch] = useReducer(authReducer, initState);
 
@@ -47,6 +47,7 @@ const AuthState = ({ children }: AuthStateProps) => {
     // Función para manejar el logout
     const authLogout = useCallback(async () => {
         try {
+            await logoutUser();
             localStorage.setItem("isAuthenticated", "false");
             setAuthenticated(AUTH_LOGOUT, false);
             console.log("Session successfully closed");
@@ -106,7 +107,7 @@ const AuthState = ({ children }: AuthStateProps) => {
                 return;
             }
             try {
-                firstLogin();
+                await firstLogin();
             } catch (err) {
                 console.error("Error verifying token: ", err);
             }

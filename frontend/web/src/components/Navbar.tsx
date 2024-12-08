@@ -58,6 +58,7 @@ const Navbar = () => {
                     >
                         Historial
                     </Link>
+                    <div>sadasd</div>
                 </li>
             </ul>
         </nav>

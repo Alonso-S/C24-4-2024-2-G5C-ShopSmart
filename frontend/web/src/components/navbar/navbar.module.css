@@ -1,0 +1,176 @@
+/* Navbar styles */
+.navbar {
+    flex-grow: 1;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: auto;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.shop, .smart {
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: black;
+}
+
+.shop {
+    font-weight: bold;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #4b5563; /* Gray color */
+    font-size: 0.875rem;
+    font-weight: medium;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.navLink:hover {
+    color: #00bcd4; /* Cyan color on hover */
+}
+
+/* Estilos comunes para botones */
+.button, .authButton {
+    background-color: #00bcd4;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    border: 1px solid #00bcd4;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 16px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.button:hover, .authButton:hover {
+    background-color: rgb(0, 170, 190);
+    border: 1px solid rgb(0, 170, 190);
+
+}
+
+.authButtonSignIn {
+    background-color: white;
+    color: #00bcd4;
+    border: 1px solid #00BCD4;
+}
+
+.authButtonSignIn:hover {
+    background-color: rgb(230, 230, 230);
+    
+}
+
+.mobileMenuButton {
+    display: none;
+}
+
+.menuButton {
+    background-color: transparent;
+    color: #4b5563;
+    font-size: 1.25rem;
+    border: none;
+    cursor: pointer;
+}
+
+.logOutButton {
+    display: flex;
+    justify-content: center;
+}
+/* Mobile Menu */
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+
+    .mobileMenuButton {
+        display: block;
+    }
+
+    .mobileMenu {
+        background-color: white;
+        padding: 16px;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    .mobileMenuLink {
+        display: block;
+        padding: 8px 16px;
+        color: #4b5563;
+        font-size: 1rem;
+        text-decoration: none;
+        margin-bottom: 8px;
+    }
+
+    .mobileMenuLink:hover {
+        color: #00bcd4;
+    }
+
+    .mobileAuthButton {
+        background-color: #00bcd4;
+        color: white;
+        padding: 8px 16px;
+        font-size: 0.875rem;
+        border: 1px solid #00bcd4;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+
+    .mobileAuthButtonSignIn {
+        background-color: white;
+        color: #00bcd4;
+        border: 1px solid #00bcd4;
+    }
+
+    .mobileAuthButtonSignIn:hover {
+        background-color: rgb(230, 230, 230);
+    }
+
+    .mobileAuthButtonSignUp:hover {
+        background-color: rgb(0, 170, 190);
+    }
+
+    .mobileAuthButtonSignIn, .mobileAuthButtonSignUp {
+        margin-left: 16px;
+    }
+    .mobileLogOutButton{
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+
+
+.logoutIcon {
+    margin-right: 0.5rem; /* Equivalente a mr-2 */
+    height: 1rem;         /* Equivalente a h-4 */
+    width: 1rem;          /* Equivalente a w-4 */
+}

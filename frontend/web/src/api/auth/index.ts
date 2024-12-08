@@ -9,12 +9,10 @@ interface AuthLoginParams {
 
 const loginUser = async ({ email, password }: AuthLoginParams) => {
     try {
-        const response = await axiosInstance.post("/auth/login", {
+        await axiosInstance.post("/auth/login", {
             email,
             password,
         });
-        console.log(response);
-        console.log(response.data);
     } catch (err) {
         if (axios.isAxiosError(err)) {
             const message = err.response?.data?.message ||
@@ -48,7 +46,7 @@ const registerUser = async (user: User) => {
 
 const logoutUser = async () => {
     try {
-        const response = await axiosInstance.post("auth/logout");
+        const response = await axiosInstance.post("/auth/logout");
         console.log(response);
         return response;
     } catch (err) {

@@ -1,0 +1,48 @@
+/* General container for the Dashboard */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+  
+  /* Heading styles */
+  .heading {
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  /* Grid styles for the layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  /* Subheading for sections */
+  .subHeading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Grid for product cards */
+  .productGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  @media (min-width: 640px) {
+    .productGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  

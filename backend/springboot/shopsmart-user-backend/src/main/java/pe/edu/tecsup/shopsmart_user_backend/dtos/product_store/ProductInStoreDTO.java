@@ -4,6 +4,7 @@ import pe.edu.tecsup.shopsmart_user_backend.models.ProductStore;
 import java.math.BigDecimal;
 
 public record ProductInStoreDTO (
+            Long storeId,
             Long productId,
             int stock,
             BigDecimal price,
@@ -11,6 +12,7 @@ public record ProductInStoreDTO (
 ){
     public ProductInStoreDTO (ProductStore ps){
         this(
+                ps.getStore().getId(),
                 ps.getProduct().getId(),
                 ps.getStock(),
                 ps.getPrice(),

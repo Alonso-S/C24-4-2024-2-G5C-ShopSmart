@@ -1,20 +1,12 @@
 .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan */
     gap: 16px;
-    margin: 0 auto;
-    padding: 16px;
+    justify-content: space-between; /* Distribuye el espacio entre las tarjetas */
   }
   
-  @media (max-width: 768px) {
-    .card-container {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .card-container {
-      grid-template-columns: 1fr; 
-    }
+  .card {
+    flex: 1 1 250px; /* Cada tarjeta tiene un tamaño base de 250px, pero puede crecer */
+    max-width: 250px; /* Limita el tamaño máximo de cada tarjeta */
   }
   

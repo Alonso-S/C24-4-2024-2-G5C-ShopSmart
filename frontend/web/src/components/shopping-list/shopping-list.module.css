@@ -1,0 +1,93 @@
+/* General styles for the shopping list */
+.shoppingListCard {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+  }
+  
+  .shoppingListHeader h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .shoppingListContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputContainer {
+    display: flex;
+    margin-bottom: 16px;
+  }
+  
+  .input {
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  .addButton {
+    background-color: #00bcd4;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  
+  .itemList {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+  }
+  
+  .itemActions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .decrementButton,
+  .incrementButton,
+  .removeButton {
+    background-color: #e0e0e0;
+    padding: 4px 8px;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+    border-radius: 4px;
+  }
+  
+  .decrementButton:hover,
+  .incrementButton:hover,
+  .removeButton:hover {
+    background-color: #ccc;
+  }
+  
+  .quantity {
+    padding: 6px 12px;
+    margin: 0 8px;
+    background-color: white;
+    border-radius: 4px;
+  }
+  

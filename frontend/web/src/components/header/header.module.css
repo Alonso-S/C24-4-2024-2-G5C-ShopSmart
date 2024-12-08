@@ -2,13 +2,12 @@
   
   .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: var(--color-black);
-    padding: 15px 20px;
     color: var(--color-text);
   }
-  
+/*   
   .logo {
     display: flex;
     align-items: center;
@@ -48,4 +47,4 @@
     position: absolute;
     right: 20px;
     top: 80px;
-  }
+  } */

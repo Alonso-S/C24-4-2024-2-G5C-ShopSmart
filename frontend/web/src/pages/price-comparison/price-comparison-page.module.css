@@ -1,0 +1,277 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .searchBar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 1rem;
+    color: #757575;
+  }
+  
+  .searchInput {
+    flex-grow: 1;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    border-color: #00BCD4;
+    box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.2);
+  }
+  
+  .searchButton {
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.75rem 1.5rem;
+    margin-left: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .searchButton:hover {
+    background-color: #00ACC1;
+  }
+  
+  .filtersContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .filterGroup {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filterGroup label {
+    margin-right: 0.5rem;
+  }
+  
+  .select {
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    background-color: white;
+  }
+  
+  .comparisonTable {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+  }
+  
+  .comparisonTable table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .comparisonTable th,
+  .comparisonTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .comparisonTable th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .tableRow:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .tableRow:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .icon {
+    vertical-align: middle;
+    margin-right: 0.25rem;
+  }
+  
+  .discount {
+    color: #4CAF50;
+    font-weight: bold;
+  }
+  
+  .instock {
+    color: #4CAF50;
+  }
+  
+  .lowstock {
+    color: #FFC107;
+  }
+  
+  .outofstock {
+    color: #F44336;
+  }
+  
+  .buyButton {
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buyButton:hover {
+    background-color: #00ACC1;
+  }
+  
+  .productDetailsContainer {
+    margin-bottom: 2rem;
+  }
+  
+  .productDetails {
+    display: flex;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .productImage {
+    flex: 0 0 200px;
+  }
+  
+  .productInfo {
+    flex: 1;
+    padding: 1.5rem;
+  }
+  
+  .productInfo h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .productInfo p {
+    margin-bottom: 1rem;
+    color: #757575;
+  }
+  
+  .moreInfoButton {
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .moreInfoButton:hover {
+    background-color: #00ACC1;
+  }
+  
+  .priceHistory {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .mapButton {
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .mapButton:hover {
+    background-color: #00ACC1;
+  }
+  
+  .mapContainer {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .productDetails {
+      flex-direction: column;
+    }
+  
+    .productImage {
+      flex: 0 0 auto;
+      height: 200px;
+    }
+  
+    .comparisonTable {
+      font-size: 0.875rem;
+    }
+  
+    .comparisonTable th,
+    .comparisonTable td {
+      padding: 0.75rem;
+    }
+  
+    .buyButton,
+    .moreInfoButton,
+    .mapButton {
+      width: 100%;
+    }
+  
+    .filtersContainer {
+      flex-direction: column;
+    }
+  
+    .filterGroup {
+      margin-bottom: 1rem;
+    }
+  
+    .select {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .searchBar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .searchInput {
+      margin-bottom: 1rem;
+    }
+  
+    .searchButton {
+      margin-left: 0;
+    }
+  }
+  
+  

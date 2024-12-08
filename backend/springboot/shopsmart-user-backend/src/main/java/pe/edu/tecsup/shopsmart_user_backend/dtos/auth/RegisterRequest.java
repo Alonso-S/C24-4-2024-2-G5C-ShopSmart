@@ -6,8 +6,10 @@ public record RegisterRequest(
         String address,
         String email,
         String password,
-
         String province,
-        String district
+        String district,
+        String role
+
 ) {
+
 }

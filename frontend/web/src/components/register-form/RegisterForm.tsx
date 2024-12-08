@@ -1,13 +1,11 @@
 import React, { useContext, useRef, useState } from "react";
 import axios from "axios";
-import AuthContext from "../context/auth/AuthContext";
-import styles from "../styles/RegisterForm.module.css";
+import AuthContext from "../../context/auth/AuthContext";
+import styles from "./register-form.module.css";
+import { useNavigate } from "react-router-dom";
 
-interface RegisterFormProps {
-    toggleForm: () => void;
-}
-
-const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
+const RegisterForm = () => {
+    const navigate = useNavigate();
     const { authRegister } = useContext(AuthContext);
 
     const [formData, setFormData] = useState({
@@ -181,7 +179,13 @@ const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
 
             <p className={styles.paragraph}>
                 ¿Ya tienes una cuenta?{" "}
-                <span onClick={toggleForm}>Inicia sesión</span>
+                <span
+                    onClick={() => {
+                        navigate("/login");
+                    }}
+                >
+                    Inicia sesión
+                </span>
             </p>
         </div>
     );

@@ -1,0 +1,82 @@
+/* General styles for the product card */
+.card {
+    width: 100%;
+    max-width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+  }
+  
+  .cardHeader {
+    margin-bottom: 16px;
+  }
+  
+  .cardTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .productName {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .recommendedBadge {
+    background-color: #e0f7fa;
+    color: #00acc1;
+    font-size: 12px;
+    font-weight: medium;
+    padding: 2px 8px;
+    border-radius: 9999px;
+  }
+  
+  .cardContent {
+    margin-bottom: 16px;
+  }
+  
+  .productImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .productPrice {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00bcd4;
+  }
+  
+  .cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .addToCartButton,
+  .likeButton {
+    background-color: #00bcd4;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .addToCartButton:hover {
+    background-color: #0097a7;
+  }
+  
+  .likeButton {
+    border: 1px solid #00bcd4;
+    background-color: transparent;
+  }
+  
+  .likeButton:hover {
+    background-color: #e0f7fa;
+  }
+  
