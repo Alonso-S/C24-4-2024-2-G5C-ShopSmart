@@ -1,0 +1,23 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.productContent {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.leftColumn,
+.rightColumn {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .productContent {
+    flex-direction: column;
+  }
+}

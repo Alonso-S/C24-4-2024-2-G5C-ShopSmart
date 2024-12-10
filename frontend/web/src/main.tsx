@@ -4,12 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import AuthState from "./context/auth/AuthState.tsx";
 import "./styles/index.css";
+import UserState from "./context/user/UserState.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthState>
-        <App />
+        <UserState>
+          <App />
+        </UserState>
       </AuthState>
     </BrowserRouter>
   </StrictMode>,

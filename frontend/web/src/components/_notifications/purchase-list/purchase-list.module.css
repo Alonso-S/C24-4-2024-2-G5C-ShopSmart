@@ -1,0 +1,99 @@
+.purchaseList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.purchaseItem {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.purchaseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.productName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #00bcd4;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.purchaseInfo {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.expandedContent {
+  margin-top: 1rem;
+}
+
+.expandedInfo {
+  display: flex;
+  gap: 1rem;
+}
+
+.productImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.discount {
+  font-size: 0.9rem;
+  color: #4caf50;
+  margin-top: 0.5rem;
+}
+
+.deleteButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+}
+
+.deleteIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+}

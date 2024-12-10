@@ -1,37 +1,33 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 import styles from "./home-page.module.css";
+import UserContext from "../../context/user/UserContext";
+import { getRecentPurchases } from "../../api/purchase";
 
-// Mock data for demonstration
-const user = {
-    name: "John Doe",
-    avatar: "/placeholder.svg?height=100&width=100",
-};
-
-const purchases = [
-    {
-        id: 1,
-        name: "Wireless Headphones",
-        quantity: 1,
-        price: 129.99,
-        date: "2023-05-15",
-    },
-    {
-        id: 2,
-        name: "Smart Watch",
-        quantity: 1,
-        price: 199.99,
-        date: "2023-05-10",
-    },
-    {
-        id: 3,
-        name: "Laptop Stand",
-        quantity: 2,
-        price: 39.99,
-        date: "2023-05-05",
-    },
-];
+// const purchases = [
+//     {
+//         id: 1,
+//         name: "Wireless Headphones",
+//         quantity: 1,
+//         price: 129.99,
+//         date: "2023-05-15",
+//     },
+//     {
+//         id: 2,
+//         name: "Smart Watch",
+//         quantity: 1,
+//         price: 199.99,
+//         date: "2023-05-10",
+//     },
+//     {
+//         id: 3,
+//         name: "Laptop Stand",
+//         quantity: 2,
+//         price: 39.99,
+//         date: "2023-05-05",
+//     },
+// ];
 
 const recommendations = [
     {
@@ -60,6 +56,33 @@ const recommendations = [
 const initialShoppingLists = ["Groceries", "Electronics", "Home Decor"];
 
 const HomePage = () => {
+    const user = useContext(UserContext);
+
+    const [purchases, setPurchases] = useState([
+        {
+            id: undefined,
+            name: "",
+            quantity: undefined,
+            price: 0.00,
+            date: undefined,
+        },
+    ]);
+
+    useEffect(() => {
+        const getPurchases = async (id: number) => {
+            try {
+                const data = await getRecentPurchases(id);
+                setPurchases(data);
+            } catch (error) {
+                console.error("Error al obtener las compras:", error);
+            }
+        };
+        if (user.id === undefined) {
+            return;
+        }
+        getPurchases(user.id);
+    }, [user.id]);
+
     const [shoppingLists, setShoppingLists] = useState(initialShoppingLists);
     const [newList, setNewList] = useState("");
 
@@ -88,7 +111,7 @@ const HomePage = () => {
                         <div className={styles.profile}>
                             <div className={styles.avatar}>
                                 <img
-                                    src={user.avatar}
+                                    src={user.image}
                                     alt={user.name}
                                     width={128}
                                     height={128}

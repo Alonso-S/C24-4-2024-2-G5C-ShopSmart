@@ -20,6 +20,7 @@ public class User {
     @NotEmpty
     private String name;
 
+    private String avatar;
     @NotEmpty
     private String role;
     @NotEmpty

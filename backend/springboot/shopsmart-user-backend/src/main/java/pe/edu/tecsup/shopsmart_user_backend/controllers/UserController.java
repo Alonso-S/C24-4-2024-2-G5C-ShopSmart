@@ -48,4 +48,6 @@ public class UserController {
         List<ShoppingList> shoppingLists = userService.getShoppingLists(user);
         return ResponseEntity.ok(shoppingLists);
     }
+
+
 }

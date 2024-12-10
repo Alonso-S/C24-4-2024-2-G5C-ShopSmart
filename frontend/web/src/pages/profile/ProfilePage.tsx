@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./profile-page.module.css";
-import ProfileImage from "../../components/profile-image/ProfileImage";
+import ProfileImage from "../../components/images/profile-image/ProfileImage";
 import ProfileInfo from "../../components/profile-info/ProfileInfo";
 import { getUserProfile } from "../../api/profile";
 import Footer from "../../components/footer/Footer";

@@ -1,0 +1,23 @@
+.notificationPage {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .notificationPage {
+    padding: 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,120 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: #00bcd4;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  max-width: 250px;
+}
+
+.mainContent {
+  flex: 3;
+}
+
+.listCategories {
+  list-style-type: none;
+  padding: 0;
+}
+
+.listItem {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.listItem:hover {
+  background-color: #e0e0e0;
+}
+
+.listItem.selected {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.addListButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addListButton:hover {
+  background-color: #0097a7;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.listActions {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.actionButton:hover {
+  background-color: #e0e0e0;
+}
+
+.quickLinks {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.quickLinks a {
+  color: #00bcd4;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.quickLinks a:hover {
+  color: #0097a7;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-width: 100%;
+  }
+}

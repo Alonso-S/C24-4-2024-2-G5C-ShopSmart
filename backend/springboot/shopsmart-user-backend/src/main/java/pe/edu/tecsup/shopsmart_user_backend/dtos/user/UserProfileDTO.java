@@ -8,7 +8,8 @@ public record UserProfileDTO (
         String address,
         String email,
         String province,
-        String district
+        String district,
+        String avatar
 ) {
     public UserProfileDTO(User user){
         this(
@@ -17,7 +18,8 @@ public record UserProfileDTO (
                 user.getAddress(),
                 user.getEmail(),
                 user.getProvince(),
-                user.getDistrict()
+                user.getDistrict(),
+                user.getAvatar()
         );
     }
 }

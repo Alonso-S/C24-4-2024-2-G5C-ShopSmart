@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu, ShoppingCart, X } from "lucide-react";
 import styles from "./navbar.module.css";
 import AuthContext from "../../context/auth/AuthContext";
 
@@ -31,6 +31,7 @@ const Navbar = () => {
                 <div className={styles.flex}>
                     <div className={styles.logo}>
                         <Link to="/">
+                            <ShoppingCart color="#06B6D4" />
                             <span className={styles.shop}>Shop</span>
                             <span className={styles.smart}>Smart</span>
                         </Link>

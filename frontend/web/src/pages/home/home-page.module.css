@@ -5,13 +5,14 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
   color: #333;
 }
 
 a {
-  color: #00BCD4;
+  color: #00bcd4;
   text-decoration: none;
 }
 
@@ -24,222 +25,225 @@ button {
 }
 
 /* Smooth scrolling for the entire page */
-html {.dashboard {
-  min-height: 100vh;
-  background-color: white;
-  color: black;
-  font-family: sans-serif;
-}
+html {
+  .dashboard {
+    min-height: 100vh;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+  }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
 
-.columns {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-@media (min-width: 768px) {
   .columns {
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
-  .leftColumn {
-    width: 25%;
+  @media (min-width: 768px) {
+    .columns {
+      flex-direction: row;
+    }
+
+    .leftColumn {
+      width: 25%;
+    }
+
+    .rightColumn {
+      width: 75%;
+    }
   }
 
-  .rightColumn {
-    width: 75%;
+  .profile {
+    text-align: center;
   }
-}
 
-.profile {
-  text-align: center;
-}
+  .avatar {
+    width: 128px;
+    height: 128px;
+    margin: 0 auto;
+    background-color: #00000000;
+    border-radius: 50%;
+    overflow: hidden;
+  }
 
-.avatar {
-  width: 128px;
-  height: 128px;
-  margin: 0 auto;
-  background-color: #00BCD4;
-  border-radius: 50%;
-  overflow: hidden;
-}
+  .avatarImage {
+    object-fit: cover;
+  }
 
-.avatarImage {
-  object-fit: cover;
-}
+  .userName {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
-.userName {
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
+  .section {
+    margin-bottom: 2rem;
+  }
 
-.section {
-  margin-bottom: 2rem;
-}
+  .sectionTitle {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
 
-.sectionTitle {
-  font-size: 1.875rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
+  .card {
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
 
-.card {
-  background-color: #F5F5F5;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+  .purchaseList {
+    list-style-type: none;
+    padding: 0;
+  }
 
-.purchaseList {
-  list-style-type: none;
-  padding: 0;
-}
+  .purchaseItem {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
 
-.purchaseItem {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #E0E0E0;
-}
+  .purchaseItem:last-child {
+    border-bottom: none;
+  }
 
-.purchaseItem:last-child {
-  border-bottom: none;
-}
+  .purchaseDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.purchaseDetails {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .productName {
+    font-weight: 500;
+  }
 
-.productName {
-  font-weight: 500;
-}
+  .recommendationsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
 
-.recommendationsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-}
+  .productCard {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
 
-.productCard {
-  background-color: white;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-}
+  .productCard:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-.productCard:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  .productImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
 
-.productImage {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
+  .productInfo {
+    padding: 1rem;
+  }
 
-.productInfo {
-  padding: 1rem;
-}
+  .productName {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
 
-.productName {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
+  .productDescription {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
 
-.productDescription {
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
+  .productPrice {
+    font-weight: bold;
+    color: #00bcd4;
+  }
 
-.productPrice {
-  font-weight: bold;
-  color: #00BCD4;
-}
+  .shoppingLists {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
 
-.shoppingLists {
-  list-style-type: none;
-  padding: 0;
-  margin-bottom: 1rem;
-}
+  .shoppingListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
 
-.shoppingListItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #E0E0E0;
-}
+  .shoppingListItem:last-child {
+    border-bottom: none;
+  }
 
-.shoppingListItem:last-child {
-  border-bottom: none;
-}
+  .removeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff5252;
+    transition: color 0.2s ease;
+  }
 
-.removeButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FF5252;
-  transition: color 0.2s ease;
-}
+  .removeButton:hover {
+    color: #ff1744;
+  }
 
-.removeButton:hover {
-  color: #FF1744;
-}
+  .addListForm {
+    display: flex;
+    gap: 0.5rem;
+  }
 
-.addListForm {
-  display: flex;
-  gap: 0.5rem;
-}
+  .input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+  }
 
-.input {
-  flex-grow: 1;
-  padding: 0.75rem;
-  border: 1px solid #E0E0E0;
-  border-radius: 0.25rem;
-}
+  .addButton {
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-.addButton {
-  background-color: #00BCD4;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+  .addButton:hover {
+    background-color: #00acc1;
+  }
 
-.addButton:hover {
-  background-color: #00ACC1;
-}
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
 
-.icon {
-  width: 1rem;
-  height: 1rem;
-}
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animateFadeIn {
-  animation: fadeIn 0.5s ease-out;
-}
-
+  .animateFadeIn {
+    animation: fadeIn 0.5s ease-out;
+  }
 
   scroll-behavior: smooth;
 }
-

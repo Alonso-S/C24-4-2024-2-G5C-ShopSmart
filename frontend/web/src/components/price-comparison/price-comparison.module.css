@@ -1,0 +1,36 @@
+.priceComparison {
+  margin-top: 2rem;
+}
+
+.storeItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.storeInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.priceDistance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.bestPrice {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.distance {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #666;
+}

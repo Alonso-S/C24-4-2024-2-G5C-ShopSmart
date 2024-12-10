@@ -35,7 +35,7 @@ const Inventory: React.FC = () => {
     };
 
     return (
-        <div>
+        <>
             <main className={styles.container}>
                 <h1 className={styles.title}>My Inventory</h1>
 
@@ -113,7 +113,7 @@ const Inventory: React.FC = () => {
                 </table>
             </main>
             <Footer />
-        </div>
+        </>
     );
 };
 

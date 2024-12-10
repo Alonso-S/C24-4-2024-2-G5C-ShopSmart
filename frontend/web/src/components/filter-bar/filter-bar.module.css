@@ -1,0 +1,42 @@
+.filterBar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.filterButton {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.filterButton.active {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+.filterButton:hover {
+  background-color: #e0e0e0;
+}
+
+.filterButton.active:hover {
+  background-color: #00acc1;
+}
+
+@media (max-width: 768px) {
+  .filterBar {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .filterButton {
+    flex: 0 0 auto;
+  }
+}

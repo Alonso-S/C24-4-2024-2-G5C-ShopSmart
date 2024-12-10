@@ -1,0 +1,59 @@
+.productCard {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .productImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+  
+  .productInfo {
+    flex: 1;
+  }
+  
+  .productName {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .productPrice {
+    color: #00BCD4;
+    font-weight: bold;
+  }
+  
+  .quantityControl {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .quantityButton {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .quantity {
+    margin: 0 0.5rem;
+    font-weight: bold;
+  }
+  
+  .removeButton {
+    background-color: transparent;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+  }
+  
+  

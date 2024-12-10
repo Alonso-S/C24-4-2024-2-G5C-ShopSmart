@@ -1,0 +1,45 @@
+.cartContainer {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.cartTitle {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.cartIcon {
+  margin-right: 1rem;
+  color: #00bcd4;
+}
+
+.cartContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.productList {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cartSummary {
+  flex: 0 0 300px;
+}
+
+@media (max-width: 768px) {
+  .cartContent {
+    flex-direction: column;
+  }
+
+  .cartSummary {
+    order: -1;
+  }
+}

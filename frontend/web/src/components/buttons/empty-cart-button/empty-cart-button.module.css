@@ -1,0 +1,62 @@
+.emptyCartButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .emptyCartButton:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .emptyCartButton svg {
+    margin-right: 0.5rem;
+  }
+  
+  .confirmationDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .confirmationButtons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .confirmationButtons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .confirmationButtons button:first-child {
+    background-color: #ff4444;
+    color: #fff;
+  }
+  
+  .confirmationButtons button:last-child {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  

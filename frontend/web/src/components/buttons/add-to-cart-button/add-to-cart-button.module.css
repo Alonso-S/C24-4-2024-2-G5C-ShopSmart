@@ -1,0 +1,26 @@
+.addToCartButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  background-color: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addToCartButton:hover {
+  background-color: #00acc1;
+}
+
+.addContent,
+.addedContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
