@@ -1,96 +1,139 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BarChart2, DollarSign, Map, MapPin, Search, Tag } from "lucide-react";
 import styles from "./price-comparison-page.module.css";
+import {
+    getProductIdBySearchTerm,
+    getProductWithStores,
+} from "../../api/products";
 
 // Mock data for demonstration
-const products = [
-    {
-        id: 1,
-        name: "Organic Bananas",
-        image: "/placeholder.svg?height=200&width=200",
-        description: "Fresh, organic bananas from local farms.",
-        prices: [
-            {
-                supermarket: "SuperMart",
-                price: 2.99,
-                discount: "10% off",
-                distance: 1.2,
-                stock: "In Stock",
-            },
-            {
-                supermarket: "LocalStore",
-                price: 3.49,
-                discount: "",
-                distance: 0.5,
-                stock: "Low Stock",
-            },
-            {
-                supermarket: "FreshMarket",
-                price: 3.29,
-                discount: "5% off",
-                distance: 2.1,
-                stock: "In Stock",
-            },
-        ],
-    },
-    {
-        id: 2,
-        name: "Whole Grain Bread",
-        image: "/placeholder.svg?height=200&width=200",
-        description: "Nutritious whole grain bread, perfect for sandwiches.",
-        prices: [
-            {
-                supermarket: "SuperMart",
-                price: 3.99,
-                discount: "",
-                distance: 1.2,
-                stock: "In Stock",
-            },
-            {
-                supermarket: "LocalStore",
-                price: 3.79,
-                discount: "5% off",
-                distance: 0.5,
-                stock: "Out of Stock",
-            },
-            {
-                supermarket: "FreshMarket",
-                price: 4.29,
-                discount: "Buy 1 Get 1 Free",
-                distance: 2.1,
-                stock: "In Stock",
-            },
-        ],
-    },
-];
+// const products = [
+//     {
+//         id: 1,
+//         name: "Organic Bananas",
+//         image: "/placeholder.svg?height=200&width=200",
+//         description: "Fresh, organic bananas from local farms.",
+//         prices: [
+//             {
+//                 supermarket: "SuperMart",
+//                 price: 2.99,
+//                 discount: "10% off",
+//                 distance: 1.2,
+//                 stock: "In Stock",
+//             },
+//             {
+//                 supermarket: "LocalStore",
+//                 price: 3.49,
+//                 discount: "",
+//                 distance: 0.5,
+//                 stock: "Low Stock",
+//             },
+//             {
+//                 supermarket: "FreshMarket",
+//                 price: 3.29,
+//                 discount: "5% off",
+//                 distance: 2.1,
+//                 stock: "In Stock",
+//             },
+//         ],
+//     },
+//     {
+//         id: 2,
+//         name: "Whole Grain Bread",
+//         image: "/placeholder.svg?height=200&width=200",
+//         description: "Nutritious whole grain bread, perfect for sandwiches.",
+//         prices: [
+//             {
+//                 supermarket: "SuperMart",
+//                 price: 3.99,
+//                 discount: "",
+//                 distance: 1.2,
+//                 stock: "In Stock",
+//             },
+//             {
+//                 supermarket: "LocalStore",
+//                 price: 3.79,
+//                 discount: "5% off",
+//                 distance: 0.5,
+//                 stock: "Out of Stock",
+//             },
+//             {
+//                 supermarket: "FreshMarket",
+//                 price: 4.29,
+//                 discount: "Buy 1 Get 1 Free",
+//                 distance: 2.1,
+//                 stock: "In Stock",
+//             },
+//         ],
+//     },
+// ];
 
 export default function PriceComparison() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedProduct, setSelectedProduct] = useState(products[0]);
+    const [id, setId] = useState<number | undefined>(undefined);
+    const [selectedProduct, setSelectedProduct] = useState({
+        id: 0,
+        name: "",
+        image: "",
+        description: "",
+        prices: [
+            {
+                supermarket: "",
+                price: 0.0,
+                discount: "",
+                distance: 0.0,
+                stock: "",
+            },
+        ],
+    });
     const [sortOption, setSortOption] = useState("price");
     const [filterOption, setFilterOption] = useState("all");
     const [showMap, setShowMap] = useState(false);
     const [showPriceHistory, setShowPriceHistory] = useState(false);
 
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Implement search functionality here
+
         console.log("Searching for:", searchTerm);
+
+        try {
+            const data = await getProductIdBySearchTerm(searchTerm);
+            setId(data);
+        } catch (error) {
+            console.error("Error searching for product:", error);
+        }
     };
 
+    useEffect(() => {
+        if (id === undefined) return;
+
+        const fetchData = async (productId: number) => {
+            try {
+                const data = await getProductWithStores(productId);
+                setSelectedProduct(data);
+            } catch (error) {
+                console.error("Error fetching product:", error);
+            }
+        };
+
+        fetchData(id);
+    }, [id]);
+
+    // Función para manejar la ordenación
     const handleSort = (option: string) => {
         setSortOption(option);
-        // Implement sorting functionality here
+        // Implementa la lógica de ordenación aquí
     };
 
+    // Función para manejar el filtrado
     const handleFilter = (option: string) => {
         setFilterOption(option);
-        // Implement filtering functionality here
+        // Implementa la lógica de filtrado aquí
     };
 
+    // Función para realizar la compra
     const handleBuy = (supermarket: string) => {
-        // Implement buy functionality here
         console.log(`Buying from ${supermarket}`);
     };
 
@@ -102,7 +145,7 @@ export default function PriceComparison() {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search for a product or scan barcode..."
+                    placeholder="Search for a product..."
                     className={styles.searchInput}
                 />
                 <motion.button
@@ -164,7 +207,7 @@ export default function PriceComparison() {
                         </tr>
                     </thead>
                     <tbody>
-                        {selectedProduct.prices.map((price, index) => (
+                        {selectedProduct.prices?.map((price, index) => (
                             <motion.tr
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

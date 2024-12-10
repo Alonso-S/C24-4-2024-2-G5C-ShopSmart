@@ -38,13 +38,29 @@ const Navbar = () => {
                     </div>
                     <div className={styles.navLinks}>
                         <Link to="/home" className={styles.navLink}>Home</Link>
-                        <Link to="/shopping-list" className={styles.navLink}>
-                            Shopping List
-                        </Link>
                         <Link to="/recommendations" className={styles.navLink}>
                             Recommendations
                         </Link>
+                        <Link to="/compare-prices" className={styles.navLink}>
+                            Compare Prices
+                        </Link>
 
+                        <Link to="/lists" className={styles.navLink}>
+                            Shopping List
+                        </Link>
+                        <Link to="/purchases" className={styles.navLink}>
+                            Purchases
+                        </Link>
+
+                        <Link to="/products" className={styles.navLink}>
+                            Products
+                        </Link>
+
+                        <Link to="/cart" className={styles.navLink}>Cart</Link>
+
+                        <Link to="/notifications" className={styles.navLink}>
+                            Notifications
+                        </Link>
                         {isAuthenticated
                             ? (
                                 <>

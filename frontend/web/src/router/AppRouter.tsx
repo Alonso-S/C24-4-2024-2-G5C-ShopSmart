@@ -32,23 +32,31 @@ function AppRouter() {
                 <Route element={<PrivateRoute />}>
                     <Route path="home" element={<HomePage />} />
 
-                    <Route path="shopping-list" element={<ShoppingList />} />
-
                     <Route
                         path="recommendations"
                         element={<Recommendations />}
                     />
-
+                    <Route
+                        path="compare-prices"
+                        element={<PriceComparison />}
+                    />
                     <Route path="profile" element={<Profile />} />
 
-                    <Route path="cart" element={<CartPage />} />
+                    <Route
+                        path="products/:id"
+                        element={<ProductDetailPage />}
+                    />
+                    {/* ---------------------- */}
 
-                    <Route path="products" element={<ProductDetailPage />} />
+                    <Route path="shopping-list" element={<ShoppingList />} />
+
+                    <Route path="cart" element={<CartPage />} />
 
                     <Route
                         path="notifications"
                         element={<NotificationPage />}
                     />
+
                     <Route path="purchases" element={<PurchaseHistoryPage />} />
 
                     <Route
@@ -56,22 +64,13 @@ function AppRouter() {
                         element={<ShoppingListManagementPage />}
                     >
                     </Route>
-                    <Route
-                        path="compare-prices"
-                        element={<PriceComparison />}
-                    />
-                    <Route
-                        path="recommendations"
-                        element={<Recommendations />}
-                    />
+
                     {/* ---------------------------------------------------- */}
 
                     <Route path="inventory" element={<Inventory />}></Route>
                     <Route path="stores" element={<StorePage />} />
 
                     {/* <Route path="routes" element={<LandingPage />} /> */}
-
-                    <Route path="history" element={<LandingPage />} />
                 </Route>
             </Routes>
         </>

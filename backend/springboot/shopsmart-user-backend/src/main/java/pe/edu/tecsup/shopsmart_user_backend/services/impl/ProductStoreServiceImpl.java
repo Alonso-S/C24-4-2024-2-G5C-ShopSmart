@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreDTO;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreUpdateDTO;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductWithStores;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.store.StoreWithPrice;
 import pe.edu.tecsup.shopsmart_user_backend.exceptions.ProductNotFoundException;
 import pe.edu.tecsup.shopsmart_user_backend.exceptions.ProductStoreNotFoundException;
 import pe.edu.tecsup.shopsmart_user_backend.exceptions.StoreNotFoundException;
@@ -141,5 +143,16 @@ public class ProductStoreServiceImpl implements ProductStoreService {
     public List<ProductInStoreDTO> getProductPrices(Product product) {
         return List.of();
     }
+
+    public ProductWithStores getStoresWithLowestPrices(Long productId){
+        Product product = productRepository.findById(productId).orElseThrow();
+        List<ProductStore> ps = productStoreRepository.findStoresByProductId(productId);
+        List<StoreWithPrice> storeDto = ps.stream().map(StoreWithPrice::new).toList();
+        ProductWithStores response = new ProductWithStores(product,storeDto);
+        return response;
+
+
+    }
+
 
 }

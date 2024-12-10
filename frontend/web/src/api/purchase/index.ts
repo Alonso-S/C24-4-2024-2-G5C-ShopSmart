@@ -10,4 +10,14 @@ const getRecentPurchases = async (id: number) => {
     }
 };
 
-export { getRecentPurchases };
+const getAllPurchases = async (userId: number) => {
+    try {
+        const response = await axiosInstance.get(`/api/purchases/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export { getAllPurchases, getRecentPurchases };

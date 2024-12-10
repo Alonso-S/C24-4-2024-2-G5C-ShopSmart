@@ -7,22 +7,11 @@ interface ProductInfoProps {
         name: string;
         price: number;
         description: string;
-        rating: number;
-        sizes: string[];
-        colors: string[];
     };
-    selectedSize: string;
-    setSelectedSize: (size: string) => void;
-    selectedColor: string;
-    setSelectedColor: (color: string) => void;
 }
 
 const ProductInfo: React.FC<ProductInfoProps> = ({
     product,
-    selectedSize,
-    setSelectedSize,
-    selectedColor,
-    setSelectedColor,
 }) => {
     return (
         <div className={styles.productInfo}>
@@ -41,7 +30,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
                 className={styles.priceRating}
             >
                 <span className={styles.price}>
-                    ${product.price.toFixed(2)}
+                    ${product.price?.toFixed(2)}
                 </span>
             </motion.div>
             <motion.p

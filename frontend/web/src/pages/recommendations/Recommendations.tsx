@@ -1,84 +1,84 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-    Filter,
-    Home,
-    ShoppingBag,
-    ShoppingCart,
-    SortDesc,
-    User,
-} from "lucide-react";
+import { Filter, SortDesc } from "lucide-react";
 import styles from "./recommendations.module.css";
 import ProductCard from "../../components/product-card2/ProductCard";
 import ViewCartButton from "../../components/view-cart-button/ViewCartButton";
+import UserContext from "../../context/user/UserContext";
+import { getProductRecommendations } from "../../api/recommendation";
 
-// Mock data for demonstration
-const user = {
-    name: "John",
-    preferences: ["Fruit", "Vegetables", "Dairy"],
-};
-
-const products = [
-    {
-        id: 1,
-        name: "Organic Bananas",
-        category: "Fruit",
-        price: 2.99,
-        image: "https://via.placeholder.com/200x200?text=Bananas",
-        description: "Fresh, organic bananas from local farms.",
-    },
-    {
-        id: 2,
-        name: "Whole Grain Bread",
-        category: "Bakery",
-        price: 3.99,
-        image: "https://via.placeholder.com/200x200?text=Bread",
-        description: "Nutritious whole grain bread, perfect for sandwiches.",
-    },
-    {
-        id: 3,
-        name: "Greek Yogurt",
-        category: "Dairy",
-        price: 4.49,
-        image: "https://via.placeholder.com/200x200?text=Yogurt",
-        description: "Creamy Greek yogurt, high in protein and probiotics.",
-    },
-    {
-        id: 4,
-        name: "Avocado",
-        category: "Fruit",
-        price: 1.99,
-        image: "https://via.placeholder.com/200x200?text=Avocado",
-        description: "Ripe avocados, perfect for guacamole or toast.",
-    },
-    {
-        id: 5,
-        name: "Spinach",
-        category: "Vegetables",
-        price: 2.49,
-        image: "https://via.placeholder.com/200x200?text=Spinach",
-        description: "Fresh, organic spinach leaves for salads or cooking.",
-    },
-    {
-        id: 6,
-        name: "Almond Milk",
-        category: "Dairy",
-        price: 3.29,
-        image: "https://via.placeholder.com/200x200?text=Almond+Milk",
-        description: "Unsweetened almond milk, great for smoothies or cereal.",
-    },
-];
+// const productz = [
+//     {
+//         id: 1,
+//         name: "Organic Bananas",
+//         category: "Fruit",
+//         price: 2.99,
+//         image: "https://via.placeholder.com/200x200?text=Bananas",
+//         description: "Fresh, organic bananas from local farms.",
+//     },
+//     {
+//         id: 2,
+//         name: "Whole Grain Bread",
+//         category: "Bakery",
+//         price: 3.99,
+//         image: "https://via.placeholder.com/200x200?text=Bread",
+//         description: "Nutritious whole grain bread, perfect for sandwiches.",
+//     },
+//     {
+//         id: 3,
+//         name: "Greek Yogurt",
+//         category: "Dairy",
+//         price: 4.49,
+//         image: "https://via.placeholder.com/200x200?text=Yogurt",
+//         description: "Creamy Greek yogurt, high in protein and probiotics.",
+//     },
+//     {
+//         id: 4,
+//         name: "Avocado",
+//         category: "Fruit",
+//         price: 1.99,
+//         image: "https://via.placeholder.com/200x200?text=Avocado",
+//         description: "Ripe avocados, perfect for guacamole or toast.",
+//     },
+//     {
+//         id: 5,
+//         name: "Spinach",
+//         category: "Vegetables",
+//         price: 2.49,
+//         image: "https://via.placeholder.com/200x200?text=Spinach",
+//         description: "Fresh, organic spinach leaves for salads or cooking.",
+//     },
+//     {
+//         id: 6,
+//         name: "Almond Milk",
+//         category: "Dairy",
+//         price: 3.29,
+//         image: "https://via.placeholder.com/200x200?text=Almond+Milk",
+//         description: "Unsweetened almond milk, great for smoothies or cereal.",
+//     },
+// ];
 
 const categories = ["All", "Fruit", "Vegetables", "Dairy", "Bakery"];
+
 const sortOptions = [
     "Recommended",
     "Price: Low to High",
     "Price: High to Low",
     "Newest",
-    "Top Rated",
 ];
 
 export default function Recommendations() {
+    const user = useContext(UserContext);
+
+    const [products, setProducts] = useState([{
+        id: 0,
+        name: "",
+        category: "",
+        image: "",
+        description: "",
+        price: 0,
+    }]);
+
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [sortBy, setSortBy] = useState("Recommended");
     const [filteredProducts, setFilteredProducts] = useState(products);
@@ -86,7 +86,25 @@ export default function Recommendations() {
 
     useEffect(() => {
         setIsLoading(true);
-        // Simulate API call
+
+        const getProducts = async (userId: number) => {
+            try {
+                const data = await getProductRecommendations(userId);
+                setProducts(data);
+            } catch (error) {
+                console.error("Error fetching product recommendations:", error);
+                setIsLoading(false);
+            }
+        };
+        if (user.id === undefined) {
+            return;
+        }
+        getProducts(user.id);
+        setIsLoading(false);
+    }, [user.id]);
+    useEffect(() => {
+        setIsLoading(true);
+
         setTimeout(() => {
             let filtered = products;
             if (selectedCategory !== "All") {
@@ -102,13 +120,12 @@ export default function Recommendations() {
                 case "Price: High to Low":
                     filtered.sort((a, b) => b.price - a.price);
                     break;
-                    // Add other sorting logic here
             }
 
             setFilteredProducts(filtered);
             setIsLoading(false);
         }, 1000);
-    }, [selectedCategory, sortBy]);
+    }, [selectedCategory, sortBy, products]);
 
     const addToCart = (productId: number) => {
         console.log(`Added product ${productId} to cart`);
@@ -201,25 +218,6 @@ export default function Recommendations() {
                         )}
                 </div>
             </div>
-            <motion.button
-                className={styles.ctaButton}
-                whileHover={{ scale: 1.05, backgroundColor: "#00ACC1" }}
-                whileTap={{ scale: 0.95 }}
-            >
-                Add All to Cart
-                <ShoppingBag className={styles.icon} />
-            </motion.button>
-            <footer className={styles.footer}>
-                <a href="#">
-                    <Home className={styles.footerIcon} /> Home
-                </a>
-                <a href="#">
-                    <User className={styles.footerIcon} /> Profile
-                </a>
-                <a href="#">
-                    <ShoppingCart className={styles.footerIcon} /> Cart
-                </a>
-            </footer>
         </div>
     );
 }

@@ -2,21 +2,12 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./notification-list.module.css";
 import NotificationCard from "../cards/notification-card/NotificationCard";
-
-interface Notification {
-    id: string;
-    type: "promotion" | "price_drop" | "reminder";
-    productName: string;
-    offerType: string;
-    store: string;
-    isRead: boolean;
-    date: Date;
-}
+import { NotificationType } from "../../types/Notification";
 
 interface NotificationListProps {
-    notifications: Notification[];
-    onDismiss: (id: string) => void;
-    onMarkAsRead: (id: string) => void;
+    notifications: NotificationType[];
+    onDismiss: (id: number) => void;
+    onMarkAsRead: (id: number) => void;
 }
 
 const NotificationList: React.FC<NotificationListProps> = (

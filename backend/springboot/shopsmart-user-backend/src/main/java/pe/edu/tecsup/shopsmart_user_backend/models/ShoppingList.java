@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -18,8 +19,9 @@ import java.util.Set;
 public class ShoppingList{
     @Id
     private Long id;
-    private String title;
+    private String name;
     private String description;
+    private Date createdAt;
 
 
     @ManyToOne(fetch = FetchType.EAGER)

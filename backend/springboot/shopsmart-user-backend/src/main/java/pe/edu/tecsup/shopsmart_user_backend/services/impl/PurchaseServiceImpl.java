@@ -2,6 +2,7 @@ package pe.edu.tecsup.shopsmart_user_backend.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.purchase.PurchaseResponse;
 import pe.edu.tecsup.shopsmart_user_backend.exceptions.PurchaseNotFoundException;
 import pe.edu.tecsup.shopsmart_user_backend.models.Purchase;
@@ -16,6 +17,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     private final PurchaseRepository purchaseRepository;
 
 
+    @Transactional
     public List<PurchaseResponse> getRecentPurchases(Long userId) {
         List<Purchase> purchases = purchaseRepository.findTop5ByUserIdOrderByPurchaseDateDesc(userId);
 

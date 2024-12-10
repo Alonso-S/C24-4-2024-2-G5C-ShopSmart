@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     List<Purchase> findTop5ByUserIdOrderByPurchaseDateDesc(Long userId);
+    List<Purchase> findByUserId(Long userId);
 
 }

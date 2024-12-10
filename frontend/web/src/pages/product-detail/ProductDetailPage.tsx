@@ -1,46 +1,43 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-// import Navigation from "./Navigation";
 import styles from "./product-detail-page.module.css";
 import ProductInfo from "../../components/product-info/ProductInfo";
 import AddToCartButton from "../../components/buttons/add-to-cart-button/AddToCartButton";
 import PriceComparison from "../../components/price-comparison/PriceComparison";
 import ProductImage from "../../components/images/product-image/ProductImage";
 import RecommendedProducts from "../../components/recommended-products/RecommendedProducts";
+import { useParams } from "react-router-dom";
+import { getDetailProduct } from "../../api/products";
 
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    rating: number;
-    reviewCount: number;
-    image: string;
-    sizes: string[];
-    colors: string[];
-}
+const ProductDetailPage = () => {
+    const { id } = useParams();
+    const [product, setProduct] = useState({
+        id: undefined,
+        name: "",
+        price: 0.00,
+        description: "",
+        image: "",
+    });
 
-const sampleProduct: Product = {
-    id: "1",
-    name: "Premium Wireless Headphones",
-    price: 199.99,
-    description:
-        "Experience crystal-clear sound with our premium wireless headphones. Featuring noise-cancellation technology and long-lasting battery life.",
-    rating: 4.5,
-    reviewCount: 128,
-    image: "/placeholder.svg?height=500&width=500",
-    sizes: ["Small", "Medium", "Large"],
-    colors: ["Black", "White", "Blue"],
-};
-
-const ProductDetailPage: React.FC = () => {
-    const [product] = useState<Product>(sampleProduct);
-    const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
-    const [selectedColor, setSelectedColor] = useState<string>(
-        product.colors[0],
-    );
-
+    useEffect(() => {
+        const fetchData = async (productId: number) => {
+            try {
+                const data = await getDetailProduct(productId);
+                setProduct(data);
+            } catch (error) {
+                console.error(
+                    "Error al obtener los datos del producto:",
+                    error,
+                );
+                throw new Error("Error al obtener los datos del producto");
+            }
+        };
+        if (id === undefined) {
+            return;
+        }
+        fetchData(parseInt(id));
+    }, [id]);
     return (
         <main className={styles.container}>
             <div className={styles.productContent}>
@@ -60,12 +57,8 @@ const ProductDetailPage: React.FC = () => {
                 >
                     <ProductInfo
                         product={product}
-                        selectedSize={selectedSize}
-                        setSelectedSize={setSelectedSize}
-                        selectedColor={selectedColor}
-                        setSelectedColor={setSelectedColor}
                     />
-                    <PriceComparison price={product.price} />
+                    <PriceComparison productId={product.id} />
                     <AddToCartButton price={product.price} />
                 </motion.div>
             </div>

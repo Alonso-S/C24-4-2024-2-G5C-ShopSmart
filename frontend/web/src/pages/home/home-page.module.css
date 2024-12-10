@@ -28,7 +28,6 @@ button {
 html {
   .dashboard {
     min-height: 100vh;
-    background-color: white;
     color: black;
     font-family: sans-serif;
   }

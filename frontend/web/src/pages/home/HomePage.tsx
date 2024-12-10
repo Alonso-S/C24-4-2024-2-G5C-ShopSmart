@@ -4,74 +4,55 @@ import { Minus, Plus } from "lucide-react";
 import styles from "./home-page.module.css";
 import UserContext from "../../context/user/UserContext";
 import { getRecentPurchases } from "../../api/purchase";
-
-// const purchases = [
-//     {
-//         id: 1,
-//         name: "Wireless Headphones",
-//         quantity: 1,
-//         price: 129.99,
-//         date: "2023-05-15",
-//     },
-//     {
-//         id: 2,
-//         name: "Smart Watch",
-//         quantity: 1,
-//         price: 199.99,
-//         date: "2023-05-10",
-//     },
-//     {
-//         id: 3,
-//         name: "Laptop Stand",
-//         quantity: 2,
-//         price: 39.99,
-//         date: "2023-05-05",
-//     },
-// ];
-
-const recommendations = [
-    {
-        id: 1,
-        name: "Bluetooth Speaker",
-        image: "/placeholder.svg?height=100&width=100",
-        price: 79.99,
-        description: "High-quality portable speaker with 20-hour battery life.",
-    },
-    {
-        id: 2,
-        name: "Ergonomic Mouse",
-        image: "/placeholder.svg?height=100&width=100",
-        price: 49.99,
-        description: "Comfortable mouse designed for long hours of use.",
-    },
-    {
-        id: 3,
-        name: "Noise-Cancelling Earbuds",
-        image: "/placeholder.svg?height=100&width=100",
-        price: 149.99,
-        description: "Premium earbuds with active noise cancellation.",
-    },
-];
-
-const initialShoppingLists = ["Groceries", "Electronics", "Home Decor"];
+import { getProductRecommendations } from "../../api/recommendation";
+import { getLatestShoppingLists } from "../../api/shopping-list";
 
 const HomePage = () => {
     const user = useContext(UserContext);
+
+    const [shoppingLists, setShoppingLists] = useState([{
+        id: undefined,
+        name: "",
+    }]);
 
     const [purchases, setPurchases] = useState([
         {
             id: undefined,
             name: "",
             quantity: undefined,
-            price: 0.00,
             date: undefined,
         },
     ]);
+    const [recommendations, setRecommendations] = useState([{
+        id: undefined,
+        name: "",
+        image: "",
+        description: "",
+    }]);
 
     useEffect(() => {
-        const getPurchases = async (id: number) => {
+        const getShoppingList = async (userId: number) => {
             try {
-                const data = await getRecentPurchases(id);
+                const data = await getLatestShoppingLists(userId);
+                setShoppingLists(data);
+            } catch (error) {
+                console.error("Error al obtener la lista de compras:", error);
+            }
+        };
+        const getRecommendations = async (userId: number) => {
+            try {
+                const data = await getProductRecommendations(userId);
+                console.log(data);
+                setRecommendations(data);
+            } catch (error) {
+                console.error("Error al obtener las recomendaciones:", error);
+            }
+        };
+
+        const getPurchases = async (userId: number) => {
+            try {
+                const data = await getRecentPurchases(userId);
+                console.log(data);
                 setPurchases(data);
             } catch (error) {
                 console.error("Error al obtener las compras:", error);
@@ -81,21 +62,22 @@ const HomePage = () => {
             return;
         }
         getPurchases(user.id);
+        getRecommendations(user.id);
+        getShoppingList(user.id);
     }, [user.id]);
 
-    const [shoppingLists, setShoppingLists] = useState(initialShoppingLists);
     const [newList, setNewList] = useState("");
 
     const addShoppingList = () => {
-        if (newList.trim()) {
-            setShoppingLists([...shoppingLists, newList.trim()]);
-            setNewList("");
-        }
     };
 
     const removeShoppingList = (index: number) => {
         setShoppingLists(shoppingLists.filter((_, i) => i !== index));
     };
+
+    const isShoppingListsEmpty = shoppingLists.every((list) =>
+        list.name === ""
+    );
 
     return (
         <div className={styles.dashboard}>
@@ -154,9 +136,6 @@ const HomePage = () => {
                                                 <span>
                                                     Qty: {purchase.quantity}
                                                 </span>
-                                                <span>
-                                                    ${purchase.price.toFixed(2)}
-                                                </span>
                                                 <span>{purchase.date}</span>
                                             </div>
                                         </li>
@@ -198,9 +177,6 @@ const HomePage = () => {
                                             >
                                                 {product.description}
                                             </p>
-                                            <p className={styles.productPrice}>
-                                                ${product.price.toFixed(2)}
-                                            </p>
                                         </div>
                                     </div>
                                 ))}
@@ -218,25 +194,38 @@ const HomePage = () => {
                                 Shopping Lists
                             </h2>
                             <div className={styles.card}>
-                                <ul className={styles.shoppingLists}>
-                                    {shoppingLists.map((list, index) => (
-                                        <li
-                                            key={index}
-                                            className={styles.shoppingListItem}
-                                        >
-                                            <span>{list}</span>
-                                            <button
-                                                onClick={() =>
-                                                    removeShoppingList(index)}
-                                                className={styles.removeButton}
-                                            >
-                                                <Minus
-                                                    className={styles.icon}
-                                                />
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                {isShoppingListsEmpty
+                                    ? <></>
+                                    : (
+                                        <ul className={styles.shoppingLists}>
+                                            {shoppingLists.map((
+                                                list,
+                                                index,
+                                            ) => (
+                                                <li
+                                                    key={index}
+                                                    className={styles
+                                                        .shoppingListItem}
+                                                >
+                                                    <span>{list.name}</span>
+                                                    <button
+                                                        onClick={() =>
+                                                            removeShoppingList(
+                                                                index,
+                                                            )}
+                                                        className={styles
+                                                            .removeButton}
+                                                    >
+                                                        <Minus
+                                                            className={styles
+                                                                .icon}
+                                                        />
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+
                                 <div className={styles.addListForm}>
                                     <input
                                         type="text"

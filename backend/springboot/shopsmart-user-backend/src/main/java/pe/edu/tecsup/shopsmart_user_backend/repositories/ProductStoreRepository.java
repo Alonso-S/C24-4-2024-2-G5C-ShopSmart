@@ -31,4 +31,7 @@ public interface ProductStoreRepository extends JpaRepository<ProductStore, Long
                                            @Param("minPrice") Double minPrice,
                                            @Param("maxPrice") Double maxPrice);
 
+    @Query("SELECT ps FROM ProductStore ps WHERE ps.product.id = :productId")
+    List<ProductStore> findStoresByProductId(Long productId);
+
 }

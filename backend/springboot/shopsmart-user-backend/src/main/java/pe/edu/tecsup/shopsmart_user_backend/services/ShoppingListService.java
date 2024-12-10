@@ -1,5 +1,6 @@
 package pe.edu.tecsup.shopsmart_user_backend.services;
 
+import pe.edu.tecsup.shopsmart_user_backend.dtos.shopping_list.ShoppingListResponse;
 import pe.edu.tecsup.shopsmart_user_backend.models.ListItem;
 import pe.edu.tecsup.shopsmart_user_backend.models.ShoppingList;
 import pe.edu.tecsup.shopsmart_user_backend.models.User;
@@ -49,4 +50,6 @@ public interface ShoppingListService {
      * @return List de productos de esa lista.
      */
     List<ListItem> getItemsInShoppingList(Long shoppingListId);
+
+    List<ShoppingListResponse> getLatestShoppingLists(Long userId);
 }

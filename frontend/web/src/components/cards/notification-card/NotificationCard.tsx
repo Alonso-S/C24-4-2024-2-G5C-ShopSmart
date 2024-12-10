@@ -2,20 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Bell, Eye, Tag, TrendingDown, X } from "lucide-react";
 import styles from "./notification-card.module.css";
+import { NotificationType } from "../../../types/Notification";
 
-interface Notification {
-    id: string;
-    type: "promotion" | "price_drop" | "reminder";
-    productName: string;
-    offerType: string;
-    store: string;
-    isRead: boolean;
-    date: Date;
-}
 interface NotificationCardProps {
-    notification: Notification;
-    onDismiss: (id: string) => void;
-    onMarkAsRead: (id: string) => void;
+    notification: NotificationType;
+    onDismiss: (id: number) => void;
+    onMarkAsRead: (id: number) => void;
 }
 
 const NotificationCard: React.FC<NotificationCardProps> = (

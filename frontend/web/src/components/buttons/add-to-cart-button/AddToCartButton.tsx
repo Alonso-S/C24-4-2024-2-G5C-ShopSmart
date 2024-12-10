@@ -45,7 +45,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ price }) => {
                             className={styles.addContent}
                         >
                             <ShoppingCart size={20} />
-                            <span>Add to Cart - ${price.toFixed(2)}</span>
+                            <span>Add to Cart - ${price?.toFixed(2)}</span>
                         </motion.div>
                     )}
             </AnimatePresence>

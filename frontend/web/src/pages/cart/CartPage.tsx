@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ShoppingCart, Trash2 } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import ProductCard from "../../components/cards/product-card-cart/ProductCardCart";
 import CartSummary from "../../components/cart-summary/CartSummary";
 import EmptyCartButton from "../../components/buttons/empty-cart-button/EmptyCartButton";
@@ -8,45 +8,70 @@ import CheckoutButton from "../../components/buttons/checkout-button/CheckoutBut
 import Toast from "../../components/toast/Toast";
 import styles from "./cart-page.module.css";
 import Footer from "../../components/footer/Footer";
+import UserContext from "../../context/user/UserContext";
+import { getUserCart } from "../../api/cart";
 
 interface Product {
-    id: string;
+    id: number;
     name: string;
     price: number;
     image: string;
     quantity: number;
 }
 
-const initialProducts: Product[] = [
-    {
-        id: "1",
-        name: "Smartphone",
-        price: 599.99,
-        image: "/placeholder.svg?height=100&width=100",
-        quantity: 1,
-    },
-    {
-        id: "2",
-        name: "Laptop",
-        price: 999.99,
-        image: "/placeholder.svg?height=100&width=100",
-        quantity: 1,
-    },
-    {
-        id: "3",
-        name: "Headphones",
-        price: 149.99,
-        image: "/placeholder.svg?height=100&width=100",
-        quantity: 1,
-    },
-];
+// const initialProducts: Product[] = [
+//     {
+//         id: "1",
+//         name: "Smartphone",
+//         price: 599.99,
+//         image: "/placeholder.svg?height=100&width=100",
+//         quantity: 1,
+//     },
+//     {
+//         id: "2",
+//         name: "Laptop",
+//         price: 999.99,
+//         image: "/placeholder.svg?height=100&width=100",
+//         quantity: 1,
+//     },
+//     {
+//         id: "3",
+//         name: "Headphones",
+//         price: 149.99,
+//         image: "/placeholder.svg?height=100&width=100",
+//         quantity: 1,
+//     },
+// ];
 
 const CartPage: React.FC = () => {
+    const user = useContext(UserContext);
+    const initialProducts = [{
+        id: 0,
+        name: "",
+        price: 0.00,
+        image: "",
+        quantity: 0,
+    }];
     const [products, setProducts] = useState<Product[]>(initialProducts);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
 
-    const updateQuantity = (id: string, newQuantity: number) => {
+    useEffect(() => {
+        if (user.id === undefined) return;
+        const loadProducts = async (userId: number) => {
+            try {
+                const data = await getUserCart(userId);
+                setProducts(data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                throw new Error();
+            }
+        };
+
+        loadProducts(user.id);
+    }, [user.id]);
+
+    const updateQuantity = (id: number, newQuantity: number) => {
         setProducts((prevProducts) =>
             prevProducts.map((product) =>
                 product.id === id
@@ -57,7 +82,7 @@ const CartPage: React.FC = () => {
         showToastMessage("Quantity updated");
     };
 
-    const removeProduct = (id: string) => {
+    const removeProduct = (id: number) => {
         setProducts((prevProducts) =>
             prevProducts.filter((product) => product.id !== id)
         );

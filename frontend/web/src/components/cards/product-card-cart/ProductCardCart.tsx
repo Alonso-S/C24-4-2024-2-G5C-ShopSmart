@@ -4,7 +4,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import styles from "./product-card-cart.module.css";
 
 interface Product {
-    id: string;
+    id: number;
     name: string;
     price: number;
     image: string;
@@ -13,8 +13,8 @@ interface Product {
 
 interface ProductCardProps {
     product: Product;
-    updateQuantity: (id: string, newQuantity: number) => void;
-    removeProduct: (id: string) => void;
+    updateQuantity: (id: number, newQuantity: number) => void;
+    removeProduct: (id: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (

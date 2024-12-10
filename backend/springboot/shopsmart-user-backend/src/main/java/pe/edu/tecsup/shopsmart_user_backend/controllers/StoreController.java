@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreDTO;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreUpdateDTO;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductWithStores;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.store.StoreCreateDTO;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.store.StoreDTO;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.store.StoreResponseDTO;
@@ -38,7 +39,14 @@ public class StoreController {
         return ResponseEntity.ok(storeDTO);
     }
 
-    @PostMapping
+    @GetMapping("/lowest-prices/{productId}")
+    public ResponseEntity<ProductWithStores> getProductWithStores(@PathVariable Long productId) {
+        ProductWithStores response = productStoreService.getStoresWithLowestPrices(productId);
+        return ResponseEntity.ok(response);
+    }
+
+
+        @PostMapping
     public ResponseEntity<StoreResponseDTO> createStore(@RequestBody StoreCreateDTO storeCreateDTO) {
 
         StoreDTO store = storeService.createStore(storeCreateDTO);

@@ -3,7 +3,10 @@ package pe.edu.tecsup.shopsmart_user_backend.services;
 
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreDTO;
 import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductInStoreUpdateDTO;
+import pe.edu.tecsup.shopsmart_user_backend.dtos.product_store.ProductWithStores;
 import pe.edu.tecsup.shopsmart_user_backend.models.Product;
+import pe.edu.tecsup.shopsmart_user_backend.models.ProductStore;
+import pe.edu.tecsup.shopsmart_user_backend.models.Store;
 
 import java.util.List;
 import java.util.Set;
@@ -32,6 +35,9 @@ public interface ProductStoreService {
 
     List<ProductInStoreDTO> getProductPrices(Product product);
 
+
+
+    ProductWithStores getStoresWithLowestPrices(Long productId);
 
 
 }

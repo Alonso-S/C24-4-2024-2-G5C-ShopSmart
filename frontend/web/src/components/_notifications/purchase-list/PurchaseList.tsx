@@ -1,38 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import styles from "./purchase-list.module.css";
+import UserContext from "../../../context/user/UserContext";
+import { getAllPurchases } from "../../../api/purchase";
 
-interface Purchase {
-    id: string;
-    productName: string;
-    quantity: number;
-    price: number;
-    totalSpent: number;
-    store: string;
-    purchaseDate: string;
-    image: string;
-    description: string;
-    discount: number;
-    category: string;
-}
+// interface Purchase {
+//     id: number;
+//     productName: string;
+//     quantity: number;
+//     price: number;
+//     totalSpent: number;
+//     store: string;
+//     purchaseDate: string;
+//     image: string;
+//     description: string;
+//     discount: number;
+//     category: string;
+// }
 
-const mockPurchases: Purchase[] = [
-    {
-        id: "1",
-        productName: "Wireless Headphones",
-        quantity: 1,
-        price: 129.99,
-        totalSpent: 129.99,
-        store: "ElectroMart",
-        purchaseDate: "2023-05-15",
-        image: "/placeholder.jpg",
-        description: "High-quality wireless headphones with noise cancellation",
-        discount: 0,
-        category: "Electronics",
-    },
-    // Add more mock purchases here
-];
+// const purchases: Purchase[] = [
+//     {
+//         id: 1,
+//         productName: "Wireless Headphones",
+//         quantity: 1,
+//         price: 129.99,
+//         totalSpent: 129.99,
+//         store: "ElectroMart",
+//         purchaseDate: "2023-05-15",
+//         image: "/placeholder.jpg",
+//         description: "High-quality wireless headphones with noise cancellation",
+//         discount: 0,
+//         category: "Electronics",
+//     },
+//     {
+//         id: 2,
+//         productName: "Wireless Headphones",
+//         quantity: 1,
+//         price: 129.99,
+//         totalSpent: 129.99,
+//         store: "ElectroMart",
+//         purchaseDate: "2023-05-15",
+//         image: "/placeholder.jpg",
+//         description: "High-quality wireless headphones with noise cancellation",
+//         discount: 0,
+//         category: "Electronics",
+//     },
+// ];
 
 interface PurchaseListProps {
     searchTerm: string;
@@ -40,6 +54,20 @@ interface PurchaseListProps {
 }
 
 const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
+    const user = useContext(UserContext);
+    const [purchases, setPurchases] = useState([{
+        id: 0,
+        productName: "",
+        quantity: undefined,
+        price: 0.00,
+        totalSpent: 0.00,
+        store: "",
+        purchaseDate: "",
+        image: "",
+        description: "",
+        discount: 0,
+        category: "",
+    }]);
     const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
     const toggleExpand = (id: string) => {
@@ -50,13 +78,29 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
         );
     };
 
-    const filteredPurchases = mockPurchases.filter((purchase) =>
+    useEffect(() => {
+        if (user.id === undefined) return;
+        const loadPurchases = async (userId: number) => {
+            try {
+                const data = await getAllPurchases(userId);
+                setPurchases(data);
+            } catch (error) {
+                console.error("Error loading purchase lists:", error);
+                throw new Error(
+                    "Failed to load purchase lists. Please try again later.",
+                );
+            }
+        };
+        loadPurchases(user.id);
+    }, [user.id]);
+
+    const filteredPurchases = purchases.filter((purchase) =>
         purchase.productName.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (filter === "all" ||
             purchase.category.toLowerCase() === filter.toLowerCase())
     );
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (id: number) => {
         // Implement delete logic here
         console.log(`Deleting purchase with id: ${id}`);
     };
@@ -66,7 +110,7 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
             <AnimatePresence>
                 {filteredPurchases.map((purchase) => (
                     <motion.div
-                        key={purchase.id}
+                        key={String(purchase.id)}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
@@ -79,14 +123,21 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
                             </h3>
                             <button
                                 className={styles.expandButton}
-                                onClick={() => toggleExpand(purchase.id)}
-                                aria-label={expandedItems.includes(purchase.id)
+                                onClick={() =>
+                                    toggleExpand(String(purchase.id))}
+                                aria-label={expandedItems.includes(
+                                        String(purchase.id),
+                                    )
                                     ? "Collapse details"
                                     : "Expand details"}
                             >
-                                {expandedItems.includes(purchase.id)
+                                {expandedItems.includes(String(purchase.id))
                                     ? <ChevronUp className={styles.icon} />
-                                    : <ChevronDown className={styles.icon} />}
+                                    : (
+                                        <ChevronDown
+                                            className={styles.icon}
+                                        />
+                                    )}
                             </button>
                         </div>
                         <div className={styles.purchaseInfo}>
@@ -96,7 +147,7 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
                             <p>Date: {purchase.purchaseDate}</p>
                         </div>
                         <AnimatePresence>
-                            {expandedItems.includes(purchase.id) && (
+                            {expandedItems.includes(String(purchase.id)) && (
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: "auto" }}
@@ -111,13 +162,21 @@ const PurchaseList: React.FC<PurchaseListProps> = ({ searchTerm, filter }) => {
                                             className={styles.productImage}
                                         />
                                         <div>
-                                            <p className={styles.description}>
+                                            <p
+                                                className={styles
+                                                    .description}
+                                            >
                                                 {purchase.description}
                                             </p>
                                             {purchase.discount > 0 && (
-                                                <p className={styles.discount}>
+                                                <p
+                                                    className={styles
+                                                        .discount}
+                                                >
                                                     Discount applied: ${purchase
-                                                        .discount.toFixed(2)}
+                                                        .discount.toFixed(
+                                                            2,
+                                                        )}
                                                 </p>
                                             )}
                                         </div>

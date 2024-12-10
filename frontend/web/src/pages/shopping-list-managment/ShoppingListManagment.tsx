@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-    BarChart2,
-    Bell,
-    Edit,
-    Plus,
-    Save,
-    Share2,
-    Trash2,
-} from "lucide-react";
+import { Plus, Save, Share2 } from "lucide-react";
 import styles from "./shopping-list-managment.module.css";
 
 import { Product } from "../../types/Product";
@@ -16,8 +8,11 @@ import { ShoppingList as ShoppingListType } from "../../types/ShoppingList";
 import ProductModal from "../../components/product-modals/ProductModal";
 import NotificationBar from "../../components/notification-bar/NotificationBar";
 import ShoppingList from "../../components/shopping-list-managment/ShoppingList";
+import UserContext from "../../context/user/UserContext";
+import { getUserLists } from "../../api/shopping-list";
 
 const ShoppingListManagementPage: React.FC = () => {
+    const user = useContext(UserContext);
     const [shoppingLists, setShoppingLists] = useState<ShoppingListType[]>([]);
     const [selectedList, setSelectedList] = useState<ShoppingListType | null>(
         null,
@@ -26,7 +21,17 @@ const ShoppingListManagementPage: React.FC = () => {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
     useEffect(() => {
-        // Fetch shopping lists from API or local storage
+        if (user.id === undefined) return;
+        const loadLists = async (userId: number) => {
+            try {
+                const data = await getUserLists(userId);
+                setShoppingLists(data);
+            } catch (error) {
+                console.error("Error fetching shopping lists:", error);
+                throw new Error("Failed to fetch shopping lists");
+            }
+        };
+
         const fetchedLists: ShoppingListType[] = [
             {
                 id: "1",
@@ -37,7 +42,9 @@ const ShoppingListManagementPage: React.FC = () => {
             { id: "2", name: "Special Offers", type: "Deals", products: [] },
         ];
         setShoppingLists(fetchedLists);
-    }, []);
+
+        loadLists(user.id);
+    }, [user.id]);
 
     const handleAddProduct = (product: Product) => {
         if (selectedList) {
@@ -167,11 +174,13 @@ const ShoppingListManagementPage: React.FC = () => {
                     )}
                 </div>
             </div>
-            <div className={styles.quickLinks}>
+            {
+                /* <div className={styles.quickLinks}>
                 <a href="/history">Purchase History</a>
                 <a href="/inventory">Inventory Management</a>
                 <a href="/recommendations">Personalized Recommendations</a>
-            </div>
+            </div> */
+            }
             <AnimatePresence>
                 {isProductModalOpen && (
                     <ProductModal

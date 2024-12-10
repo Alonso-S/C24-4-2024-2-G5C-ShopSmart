@@ -1,18 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Store } from "lucide-react";
 import styles from "./price-comparison.module.css";
+import { getStoresWithLowestPrices } from "../../api/store";
 
 interface PriceComparisonProps {
-    price: number;
+    productId: number | undefined;
 }
 
-const PriceComparison: React.FC<PriceComparisonProps> = ({ price }) => {
-    const stores = [
-        { name: "Local Store", price: price, distance: "0.5 miles" },
-        { name: "City Center", price: price * 1.05, distance: "2.3 miles" },
-        { name: "Mall Shop", price: price * 0.95, distance: "5.1 miles" },
-    ];
+// const stores = [
+//     { name: "Local Store", price: 0, distance: "0.5", units: "miles" },
+//     { name: "City Center", price: 1 * 1.05, distance: "2.3" },
+//     { name: "Mall Shop", price: 1 * 0.95, distance: "5.1" },
+// ];
+
+const PriceComparison: React.FC<PriceComparisonProps> = ({ productId }) => {
+    const [stores, setStores] = useState([{
+        name: "",
+        price: 0,
+        distance: "",
+        units: "",
+    }]);
+    useEffect(() => {
+        if (productId === undefined) return;
+        const getStores = async (productId: number) => {
+            try {
+                const data = await getStoresWithLowestPrices(productId);
+                setStores(data);
+            } catch (error) {
+                console.error("Error fetching stores:", error);
+                throw new Error();
+            }
+        };
+        getStores(productId);
+    }, [productId]);
 
     return (
         <div className={styles.priceComparison}>
@@ -40,7 +61,7 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({ price }) => {
                         </span>
                         <div className={styles.distance}>
                             <MapPin size={12} />
-                            <span>{store.distance}</span>
+                            <span>{`${store.distance} ${store.units}`}</span>
                         </div>
                     </div>
                 </motion.div>
